@@ -1,5 +1,6 @@
 package com.example.touchauthenticator
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -37,6 +38,11 @@ class AuthActivity:AppCompatActivity() {
         setContentView(R.layout.activity_auth)
     }
 
+    private fun launchHomePage() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        this.finish()
+    }
+
     fun login(view:View) {
         email = findViewById<EditText>(R.id.username).text.toString() + "@test.com"
         password = findViewById<EditText>(R.id.password).text.toString()
@@ -48,6 +54,7 @@ class AuthActivity:AppCompatActivity() {
                     Toast.makeText(baseContext, "Authentication success.",
                         Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
+                    launchHomePage()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -71,6 +78,7 @@ class AuthActivity:AppCompatActivity() {
                     Toast.makeText(baseContext, "Sign Up Success!",
                         Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
+                    launchHomePage()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
