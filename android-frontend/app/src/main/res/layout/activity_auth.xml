@@ -19,12 +19,12 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:hint="username"
@@ -36,9 +36,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline"
         android:selectAllOnFocus="true" />
-        android:selectAllOnFocus="true" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,7 +49,7 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"/>
+        app:layout_constraintTop_toBottomOf="@id/username"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login"
@@ -64,8 +63,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintVertical_bias="0.2"
+        android:onClick="login"/>
 
     <ProgressBar
         android:id="@+id/loading"
@@ -78,8 +78,8 @@
         android:layout_marginBottom="64dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="@id/password"
+        app:layout_constraintStart_toStartOf="@id/password"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
@@ -97,8 +97,8 @@
         android:layout_marginBottom="8dp"
         android:text="T-Secure"
         android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2" />
+        app:layout_constraintBottom_toTopOf="@id/textView2"
+        app:layout_constraintStart_toStartOf="@id/textView2" />
 
     <TextView
         android:id="@+id/textView2"
@@ -108,10 +108,10 @@
         android:text="Behavioural Authenticator"
         android:textAlignment="viewStart"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@id/imageView"
         android:gravity="start" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
