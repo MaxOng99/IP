@@ -3,23 +3,24 @@ package com.example.touchauthenticator
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.MotionEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.MotionEventCompat
 import androidx.gridlayout.widget.GridLayout
 import com.example.touchauthenticator.model.TouchGestureData
 import com.google.android.material.imageview.ShapeableImageView
-
-
 import kotlin.random.Random
 
 
@@ -27,11 +28,14 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
 
     private lateinit var btns:ArrayList<ShapeableImageView>
     private lateinit var accelerometerReadings: ArrayList<Triple<Float, Float, Float>>
-    private lateinit var rootLayout: GridLayout
+    private lateinit var gridLayout: GridLayout
+    private lateinit var rootLayout: ConstraintLayout
+    private lateinit var dialog:AlertDialog
     private var currentIndex:Int = -1
     private val tag = "DEBUG"
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +43,27 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         setContentView(R.layout.activity_enrolment)
-        rootLayout = findViewById(R.id.gridLayout)
+        gridLayout = findViewById(R.id.gridLayout)
+        rootLayout = findViewById(R.id.rootLayout)
         btns = ArrayList()
         accelerometerReadings = ArrayList()
 
+        createAlertDialog()
+        initialiseLayout()
         initialiseButtons()
         generateStimuli()
+    }
+    
+    private fun initialiseLayout() {
+        gridLayout.setOnTouchListener { view, motionEvent ->
+            shakeEffect()
+            true
+        }
+
+        rootLayout.setOnTouchListener { view, motionEvent ->
+            shakeEffect()
+            true
+        }
     }
 
     override fun onResume() {
@@ -57,6 +76,33 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
+    }
+
+    private fun shakeEffect() {
+        val shake: Animation = AnimationUtils.loadAnimation(
+            applicationContext,
+            R.anim.shake
+        )
+        gridLayout.startAnimation(shake)
+
+        dialog.show()
+    }
+
+    private fun createAlertDialog() {
+        val builder: AlertDialog.Builder? = this?.let {
+            AlertDialog.Builder(it)
+        }
+
+        builder?.setMessage("Please tap within the boxes")
+            ?.setTitle("Tapped out of bounds")
+
+        builder?.setPositiveButton(
+            "OK",
+            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+
+        dialog = builder?.create()!!
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -98,11 +144,8 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
                             downSize = motionEvent.size
                             downX = motionEvent.x
                             downY = motionEvent.y
-                        }
-
-                        else {
-                            val shake: Animation = AnimationUtils.loadAnimation(applicationContext, R.anim.shake)
-                            rootLayout.startAnimation(shake)
+                        } else {
+                            shakeEffect()
                         }
                         true
                     }
