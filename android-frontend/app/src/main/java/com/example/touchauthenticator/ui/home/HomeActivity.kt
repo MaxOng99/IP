@@ -6,20 +6,26 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.touchauthenticator.R
 import com.example.touchauthenticator.ui.enrolment.EnrolmentActivity
+import com.google.firebase.auth.FirebaseUser
 
 class HomeActivity: AppCompatActivity() {
+
+    private val viewModel: HomeViewModel = HomeViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        viewModel.currentUser = intent.extras?.getParcelable<FirebaseUser>("user")!!
+    }
+
+    fun launchEnrolmentUI(view: View) {
+        val intent = Intent(this, EnrolmentActivity::class.java)
+        intent.putExtra("user", viewModel.currentUser)
+        startActivity(Intent(this, EnrolmentActivity::class.java))
     }
 
     fun launchTestingUI(view: View) {
 
-    }
-
-    fun launchEnrolmentUI(view: View) {
-        startActivity(Intent(this, EnrolmentActivity::class.java))
     }
 
     fun launchStatisticsUI(view: View) {

@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.gridlayout.widget.GridLayout
 import com.example.touchauthenticator.R
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.firebase.auth.FirebaseUser
 import kotlin.random.Random
 
 
@@ -50,6 +51,8 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enrolment)
+        viewModel.currentUser = intent.extras?.getParcelable<FirebaseUser>("user")!!
+
         gridLayout = findViewById(R.id.gridLayout)
         rootLayout = findViewById(R.id.rootLayout)
         btns = ArrayList()

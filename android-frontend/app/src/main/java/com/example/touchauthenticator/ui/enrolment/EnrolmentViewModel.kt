@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.MotionEvent
 import androidx.lifecycle.ViewModel
 import com.example.touchauthenticator.data.model.TouchGestureData
+import com.google.firebase.auth.FirebaseUser
 
 class EnrolmentViewModel(
 
@@ -11,6 +12,7 @@ class EnrolmentViewModel(
 
     private var upEvents = ArrayList<TouchGestureData>()
     private var downEvents = ArrayList<TouchGestureData>()
+    lateinit var currentUser: FirebaseUser
 
     fun recordEvent(index: Int, event: MotionEvent) {
         val data = TouchGestureData(
