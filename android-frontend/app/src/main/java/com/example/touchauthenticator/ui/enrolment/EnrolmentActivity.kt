@@ -1,4 +1,4 @@
-package com.example.touchauthenticator
+package com.example.touchauthenticator.ui.enrolment
 
 
 import android.annotation.SuppressLint
@@ -9,17 +9,15 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import android.view.MotionEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.MotionEventCompat
 import androidx.gridlayout.widget.GridLayout
-import com.example.touchauthenticator.model.TouchGestureData
+import com.example.touchauthenticator.R
 import com.google.android.material.imageview.ShapeableImageView
 import kotlin.random.Random
 
@@ -27,43 +25,44 @@ import kotlin.random.Random
 class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
 
     private lateinit var btns:ArrayList<ShapeableImageView>
-    private lateinit var accelerometerReadings: ArrayList<Triple<Float, Float, Float>>
+
     private lateinit var gridLayout: GridLayout
     private lateinit var rootLayout: ConstraintLayout
     private lateinit var dialog:AlertDialog
     private var currentIndex:Int = -1
-    private val tag = "DEBUG"
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
+    private lateinit var accelerometerReadings: ArrayList<Triple<Float, Float, Float>>
+    private val viewModel: EnrolmentViewModel by viewModels()
+    private var counter:Int = 0
+    private var inBound = false
 
+    private fun updateCounter() {
 
+        if (counter < 50) {
+            counter++
+        }
+        else{
+            counter = 0
+            viewModel.addData()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         setContentView(R.layout.activity_enrolment)
         gridLayout = findViewById(R.id.gridLayout)
         rootLayout = findViewById(R.id.rootLayout)
         btns = ArrayList()
-        accelerometerReadings = ArrayList()
-
         createAlertDialog()
         initialiseLayout()
         initialiseButtons()
         generateStimuli()
-    }
-    
-    private fun initialiseLayout() {
-        gridLayout.setOnTouchListener { view, motionEvent ->
-            shakeEffect()
-            true
-        }
 
-        rootLayout.setOnTouchListener { view, motionEvent ->
-            shakeEffect()
-            true
-        }
+
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        accelerometerReadings = ArrayList()
+
     }
 
     override fun onResume() {
@@ -76,6 +75,19 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initialiseLayout() {
+        gridLayout.setOnTouchListener { view, motionEvent ->
+            shakeEffect()
+            true
+        }
+
+        rootLayout.setOnTouchListener { view, motionEvent ->
+            shakeEffect()
+            true
+        }
     }
 
     private fun shakeEffect() {
@@ -115,35 +127,15 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
             /** Capture raw touch gesture data*/
             button.setOnTouchListener { btn, motionEvent ->
 
-                var downTime: Long
-                var downPressure: Float
-                var downSize: Float
-                var downX: Float
-                var downY: Float
-
-                var upTime: Long
-                var upPressure: Float
-                var upSize: Float
-                var upX: Float
-                var upY: Float
-
-
                 var index:Int = btns.indexOf(btn)
-                var success:Boolean = false
-                var touchData = TouchGestureData()
 
-                when (MotionEventCompat.getActionMasked(motionEvent)) {
+                when (motionEvent.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        Log.d(tag, "Action was DOWN")
                         if (index == currentIndex) {
+                            inBound = true
+                            viewModel.recordEvent(index, motionEvent)
                             btn.setBackgroundResource(R.color.buttonBackgroundColor)
                             generateStimuli()
-                            success = true
-                            downTime = motionEvent.downTime
-                            downPressure = motionEvent.pressure
-                            downSize = motionEvent.size
-                            downX = motionEvent.x
-                            downY = motionEvent.y
                         } else {
                             shakeEffect()
                         }
@@ -151,26 +143,14 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
                     }
 
                     MotionEvent.ACTION_UP -> {
-                        Log.d(tag, "Action was UP")
 
-                        if (success) {
-                            upTime = motionEvent.downTime
-                            upPressure = motionEvent.pressure
-                            upSize = motionEvent.size
-                            upX = motionEvent.x
-                            upY = motionEvent.y
+                        if (inBound) {
+                            viewModel.recordEvent(index, motionEvent)
+                            inBound = false
+                            updateCounter()
                         }
                         true
                     }
-                    MotionEvent.ACTION_CANCEL -> {
-                        Log.d(tag, "Action was CANCEL")
-                        true
-                    }
-                    MotionEvent.ACTION_OUTSIDE -> {
-                        Log.d(tag, "Movement occurred outside bounds of current screen element")
-                        true
-                    }
-
                     else -> super.onTouchEvent(motionEvent)
                 }
             }
@@ -194,11 +174,11 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
         val z = p0.values[2]
 
         accelerometerReadings.add(Triple(x, y, z))
-        Log.d("accelerometer", "$x $y $z")
+        //Log.d("accelerometer", "$x $y $z")
     }
     
     override fun onAccuracyChanged(p0: Sensor, p1: Int) {
-        Log.d("ok", "ok")
+        //Log.d("ok", "ok")
     }
 
 }

@@ -9,7 +9,7 @@
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
-    tools:context="com.example.touchauthenticator.AuthActivity">
+    tools:context="com.example.touchauthenticator.ui.auth.AuthActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"
