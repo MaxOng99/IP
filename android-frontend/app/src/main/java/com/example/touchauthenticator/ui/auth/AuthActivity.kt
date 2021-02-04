@@ -51,19 +51,15 @@ class AuthActivity:AppCompatActivity() {
 
     private fun checkResult(authTask: Task<AuthResult>) {
         if (authTask.isSuccessful) {
-            Toast.makeText(baseContext, "Login success.",
+            Toast.makeText(baseContext, "Authentication success.",
                 Toast.LENGTH_SHORT).show()
-            val user = viewModel.getAuthorizedUser()
-            launchHomePage()
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.putExtra("user", viewModel.getAuthorizedUser())
+            startActivity(intent)
+            this.finish()
         } else {
-            Toast.makeText(baseContext, "Login failed.",
+            Toast.makeText(baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT).show()
         }
     }
-
-    private fun launchHomePage() {
-        startActivity(Intent(this, HomeActivity::class.java))
-        this.finish()
-    }
-
 }
