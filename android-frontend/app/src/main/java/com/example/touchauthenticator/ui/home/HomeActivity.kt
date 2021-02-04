@@ -21,7 +21,7 @@ class HomeActivity: AppCompatActivity() {
     fun launchEnrolmentUI(view: View) {
         val intent = Intent(this, EnrolmentActivity::class.java)
         intent.putExtra("user", viewModel.currentUser)
-        startActivity(Intent(this, EnrolmentActivity::class.java))
+        startActivity(intent)
     }
 
     fun launchTestingUI(view: View) {
