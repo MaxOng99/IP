@@ -1,5 +1,18 @@
-package com.example.touchauthenticator.data
+package com.example.touchauthenticator.data.repository
 
-class TouchGestureRepository(private val firebaseBackend: String) {
+import com.example.touchauthenticator.data.api.DatabaseApi
+import com.example.touchauthenticator.data.model.TouchGestureData
+
+class TouchGestureRepository(
+    private val databaseApi: DatabaseApi
+) {
+
+    private fun addRecord(touchData:TouchGestureData) {
+        databaseApi.writeNewData(touchData)
+    }
+
+    fun addRecordInBatch(batchRecord: List<TouchGestureData>) {
+        databaseApi.writeDataInBatch(batchRecord)
+    }
 
 }

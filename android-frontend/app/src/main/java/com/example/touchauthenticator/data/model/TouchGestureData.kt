@@ -2,14 +2,22 @@ package com.example.touchauthenticator.data.model
 
 
 data class TouchGestureData(
-
-    private var index: Int,
-    private var pressure:Float,
-    private var timestamp:Long,
-    private var x: Float,
-    private var y: Float
+    var userId: String,
+    var data: List<Pair<RawData, RawData>>
 ) {
-    override fun toString(): String {
-        return "Index: $index | Timestamp: $timestamp | Pressure: $pressure | X: $x | Y: $y"
+
+    class RawData(
+        var index: Int,
+        var pressure: Float,
+        var timestamp: Long,
+        var x: Float,
+        var y: Float
+    ) {
+
+        override fun toString(): String {
+            return "Index: $index | Timestamp: $timestamp | Pressure: $pressure | X: $x | Y: $y"
+        }
+
     }
+
 }

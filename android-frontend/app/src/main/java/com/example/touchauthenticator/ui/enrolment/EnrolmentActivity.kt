@@ -12,12 +12,12 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.gridlayout.widget.GridLayout
 import com.example.touchauthenticator.R
+import com.example.touchauthenticator.utility.ServiceLocator
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.auth.FirebaseUser
 import kotlin.random.Random
@@ -34,20 +34,10 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private lateinit var accelerometerReadings: ArrayList<Triple<Float, Float, Float>>
-    private val viewModel: EnrolmentViewModel by viewModels()
-    private var counter:Int = 0
+    private val viewModel: EnrolmentViewModel = EnrolmentViewModel(ServiceLocator.getTouchGestureRepository())
     private var inBound = false
 
-    private fun updateCounter() {
 
-        if (counter < 50) {
-            counter++
-        }
-        else{
-            counter = 0
-            viewModel.addData()
-        }
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enrolment)
@@ -150,7 +140,6 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
                         if (inBound) {
                             viewModel.recordEvent(index, motionEvent)
                             inBound = false
-                            updateCounter()
                         }
                         true
                     }
