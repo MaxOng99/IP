@@ -2,16 +2,12 @@ package com.example.touchauthenticator.ui.enrolment
 
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.DialogInterface
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,17 +19,15 @@ import com.google.firebase.auth.FirebaseUser
 import kotlin.random.Random
 
 
-class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
+class EnrolmentActivity : AppCompatActivity() {
 
     private lateinit var btns:ArrayList<ShapeableImageView>
 
     private lateinit var gridLayout: GridLayout
     private lateinit var rootLayout: ConstraintLayout
     private lateinit var dialog:AlertDialog
+    private lateinit var progress: TextView
     private var currentIndex:Int = -1
-    private lateinit var sensorManager: SensorManager
-    private var accelerometer: Sensor? = null
-    private lateinit var accelerometerReadings: ArrayList<Triple<Float, Float, Float>>
     private val viewModel: EnrolmentViewModel = EnrolmentViewModel(ServiceLocator.getTouchGestureRepository())
     private var inBound = false
 
@@ -50,24 +44,6 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
         initialiseLayout()
         initialiseButtons()
         generateStimuli()
-
-
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        accelerometerReadings = ArrayList()
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        accelerometer?.also { light ->
-            sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_NORMAL)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        sensorManager.unregisterListener(this)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -159,18 +135,4 @@ class EnrolmentActivity : AppCompatActivity(), SensorEventListener{
         currentIndex = index
         btn.startAnimation(myAnim);
     }
-
-    override fun onSensorChanged(p0: SensorEvent) {
-        val x = p0.values[0]
-        val y = p0.values[1]
-        val z = p0.values[2]
-
-        accelerometerReadings.add(Triple(x, y, z))
-        //Log.d("accelerometer", "$x $y $z")
-    }
-    
-    override fun onAccuracyChanged(p0: Sensor, p1: Int) {
-        //Log.d("ok", "ok")
-    }
-
 }
