@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +17,7 @@ import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ServiceLocator
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.auth.FirebaseUser
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 
@@ -35,10 +37,17 @@ class EnrolmentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enrolment)
-        viewModel.currentUser = intent.extras?.getParcelable<FirebaseUser>("user")!!
-
+        //viewModel.currentUser = intent.extras?.getParcelable<FirebaseUser>("user")!!
+        progress = findViewById(R.id.progress)
         gridLayout = findViewById(R.id.gridLayout)
         rootLayout = findViewById(R.id.rootLayout)
+
+        val observer = androidx.lifecycle.Observer<Int> { newCounter ->
+            progress.text = "$newCounter/10"
+        }
+
+        viewModel.stateCounter.observe(this, observer)
+
         btns = ArrayList()
         createAlertDialog()
         initialiseLayout()
@@ -106,6 +115,7 @@ class EnrolmentActivity : AppCompatActivity() {
                             btn.setBackgroundResource(R.color.buttonBackgroundColor)
                             generateStimuli()
                         } else {
+                            viewModel.resetSample()
                             shakeEffect()
                         }
                         true

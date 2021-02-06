@@ -126,12 +126,12 @@
 
     </androidx.gridlayout.widget.GridLayout>
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
+    <TextView
+        android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="Trial Mode Off"
-        android:textOn="Trial Mode On"
+        android:text="0/10"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
