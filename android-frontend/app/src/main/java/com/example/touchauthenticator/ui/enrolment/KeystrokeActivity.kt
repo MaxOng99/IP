@@ -27,7 +27,7 @@ class KeystrokeActivity: EnrolmentActivity() {
                 Toast.makeText(baseContext, "Data sent successfully.",
                     Toast.LENGTH_SHORT).show()
                 viewModel.successStatus.value = ""
-                ActivityLauncher.launchHomeActivity(this, viewModel.currentUser)
+                ActivityLauncher.launchAuthActivity(this)
             }else if (submitted == "failed"){
                 Toast.makeText(baseContext, "Unable to send data. Please check your network connectivity.",
                     Toast.LENGTH_SHORT).show()

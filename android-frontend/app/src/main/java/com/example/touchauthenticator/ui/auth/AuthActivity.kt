@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 import com.example.touchauthenticator.R
-import com.example.touchauthenticator.ui.home.HomeActivity
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.example.touchauthenticator.utility.ServiceLocator
 import com.google.android.gms.tasks.Task
@@ -54,9 +53,7 @@ class AuthActivity:AppCompatActivity() {
         if (authTask.isSuccessful) {
             Toast.makeText(baseContext, "Authentication success.",
                 Toast.LENGTH_SHORT).show()
-
             viewModel.getAuthorizedUser()?.let { ActivityLauncher.launchHomeActivity(this, it) }
-            this.finish()
         } else {
             Toast.makeText(baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT).show()

@@ -1,11 +1,9 @@
 package com.example.touchauthenticator.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.touchauthenticator.R
-import com.example.touchauthenticator.ui.enrolment.EnrolmentActivity
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.firebase.auth.FirebaseUser
 
