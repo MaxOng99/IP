@@ -23,13 +23,10 @@ object ActivityLauncher {
     }
 
     fun launchHomeActivity(activity: AppCompatActivity, currentUser: FirebaseUser) {
-        val rootIntent = Intent(activity, HomeActivity::class.java)
-        val component = rootIntent.component
-
-        val newIntent = Intent.makeRestartActivityTask(component)
-        activity.startActivity(newIntent)
+        val intent = Intent(activity, HomeActivity::class.java)
+        intent.putExtra("user", currentUser)
+        activity.startActivity(intent)
     }
-
 
     fun launchTestingActivity() {
 
