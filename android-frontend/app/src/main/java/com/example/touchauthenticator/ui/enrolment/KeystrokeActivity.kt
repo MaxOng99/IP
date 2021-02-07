@@ -10,6 +10,8 @@ import com.google.android.material.button.MaterialButton
 
 class KeystrokeActivity: EnrolmentActivity() {
 
+    private var counterToPinIndexMap = hashMapOf<Int, Int>(1 to 2, 2 to 1, 3 to 3, 4 to 3)
+    private var tapTracker = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,6 +38,18 @@ class KeystrokeActivity: EnrolmentActivity() {
         viewModel.successStatus.observe(this, observer)
     }
 
+    private fun updatePinTracker(params:String) {
+        when (params) {
+            "increment" -> {
+                tapTracker++
+            }
+
+            "reset" -> {
+                tapTracker = 0
+            }
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility", "NewApi")
     override fun initialiseButtons() {
         for (i in 0..8) {
@@ -51,10 +65,24 @@ class KeystrokeActivity: EnrolmentActivity() {
 
                 when (motionEvent.action) {
                     MotionEvent.ACTION_DOWN -> {
+                        updatePinTracker("increment")
+                        if (index == counterToPinIndexMap[tapTracker]) {
+                            inBound = true
+                            viewModel.recordEvent(index, motionEvent)
 
-                        inBound = true
-                        viewModel.recordEvent(index, motionEvent)
+                            if (tapTracker == viewModel._numberOfTaps) {
+                                updatePinTracker("reset")
+                            }
+                        }
+
+                        else{
+                            updatePinTracker("reset")
+                            viewModel.resetSample()
+                            shakeEffect()
+                        }
+
                         true
+
                     }
 
                     MotionEvent.ACTION_MOVE -> {
@@ -70,8 +98,8 @@ class KeystrokeActivity: EnrolmentActivity() {
                         if (inBound) {
                             viewModel.recordEvent(index, motionEvent)
                             inBound = false
-                            btn.backgroundTintList = resources.getColorStateList(R.color.buttonBackgroundColor, null)
                         }
+                        btn.backgroundTintList = resources.getColorStateList(R.color.buttonBackgroundColor, null)
                         true
                     }
                     else -> super.onTouchEvent(motionEvent)
