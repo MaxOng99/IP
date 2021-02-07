@@ -17,6 +17,7 @@ class ReactionActivity: EnrolmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        instruction.text = "Tap the highlighted box"
         this.initialiseButtons()
         this.initialiseObservers()
         this.generateStimuli()
@@ -63,6 +64,11 @@ class ReactionActivity: EnrolmentActivity() {
                             viewModel.resetSample()
                             shakeEffect()
                         }
+                        true
+                    }
+
+                    MotionEvent.ACTION_OUTSIDE -> {
+                        shakeEffect()
                         true
                     }
 

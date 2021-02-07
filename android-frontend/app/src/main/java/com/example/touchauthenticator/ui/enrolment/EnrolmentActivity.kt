@@ -21,7 +21,6 @@ abstract class EnrolmentActivity : AppCompatActivity() {
 
     /* UI Elements */
     lateinit var gridLayout: GridLayout
-    lateinit var rootLayout: ConstraintLayout
     lateinit var dialog:AlertDialog
     lateinit var progress: TextView
     lateinit var instruction: TextView
@@ -40,12 +39,10 @@ abstract class EnrolmentActivity : AppCompatActivity() {
         viewModel.currentUser = intent.extras?.getParcelable("user")!!
         progress = findViewById(R.id.progress)
         gridLayout = findViewById(R.id.gridLayout)
-        rootLayout = findViewById(R.id.rootLayout)
         instruction = findViewById(R.id.instruction)
 
         buttons = ArrayList()
         createAlertDialog()
-        initialiseLayout()
     }
 
     abstract fun initialiseButtons()
@@ -55,19 +52,6 @@ abstract class EnrolmentActivity : AppCompatActivity() {
             progress.text = "$newCounter/10"
         }
         viewModel.completedSamples.observe(this, sampleCounterObserver)
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    fun initialiseLayout() {
-        gridLayout.setOnTouchListener { _, _ ->
-            shakeEffect()
-            true
-        }
-
-        rootLayout.setOnTouchListener { _, _ ->
-            shakeEffect()
-            true
-        }
     }
 
     fun shakeEffect() {
