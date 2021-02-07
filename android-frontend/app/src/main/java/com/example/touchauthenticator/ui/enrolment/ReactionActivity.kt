@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.android.material.button.MaterialButton
@@ -24,13 +25,19 @@ class ReactionActivity: EnrolmentActivity() {
     override fun initialiseObservers() {
         super.initialiseObservers()
 
-        val booleanObserver = androidx.lifecycle.Observer<Boolean> { submitted ->
-            if (submitted) {
-                viewModel.successStatus.value = false
+        val observer = androidx.lifecycle.Observer<String> { dataSentToCloud ->
+            if (dataSentToCloud == "success") {
+                Toast.makeText(baseContext, "Data sent successfully.",
+                    Toast.LENGTH_SHORT).show()
+                viewModel.successStatus.value = ""
                 ActivityLauncher.launchKeystrokeActivity(this, viewModel.currentUser)
             }
+            else if (dataSentToCloud == "failed"){
+                Toast.makeText(baseContext, "Unable to send data. Please check your network connectivity.",
+                    Toast.LENGTH_SHORT).show()
+            }
         }
-        viewModel.successStatus.observe(this, booleanObserver)
+        viewModel.successStatus.observe(this, observer)
     }
     @SuppressLint("ClickableViewAccessibility", "NewApi")
     override fun initialiseButtons() {
@@ -74,12 +81,14 @@ class ReactionActivity: EnrolmentActivity() {
 
     @SuppressLint("ResourceAsColor", "NewApi")
     private fun generateStimuli() {
+
         val index = Random.nextInt(9);
         val btn = buttons[index]
-        val myAnim: Animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        //val myAnim: Animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         btn.backgroundTintList = resources.getColorStateList(R.color.activatedBgColor, null)
         currentIndex = index
-        btn.startAnimation(myAnim);
+        //btn.startAnimation(myAnim);
+
     }
 }

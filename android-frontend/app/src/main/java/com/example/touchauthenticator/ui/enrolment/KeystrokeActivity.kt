@@ -3,6 +3,7 @@ package com.example.touchauthenticator.ui.enrolment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
+import android.widget.Toast
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.android.material.button.MaterialButton
 
@@ -18,13 +19,18 @@ class KeystrokeActivity: EnrolmentActivity() {
     override fun initialiseObservers() {
         super.initialiseObservers()
 
-        val booleanObserver = androidx.lifecycle.Observer<Boolean> { submitted ->
-            if (submitted) {
-                viewModel.successStatus.value = false
+        val observer = androidx.lifecycle.Observer<String> { submitted ->
+            if (submitted == "success") {
+                Toast.makeText(baseContext, "Data sent successfully.",
+                    Toast.LENGTH_SHORT).show()
+                viewModel.successStatus.value = ""
                 ActivityLauncher.launchHomeActivity(this, viewModel.currentUser)
+            }else if (submitted == "failed"){
+                Toast.makeText(baseContext, "Unable to send data. Please check your network connectivity.",
+                    Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel.successStatus.observe(this, booleanObserver)
+        viewModel.successStatus.observe(this, observer)
     }
 
     @SuppressLint("ClickableViewAccessibility", "NewApi")

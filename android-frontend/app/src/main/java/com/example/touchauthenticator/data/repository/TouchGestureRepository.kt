@@ -1,18 +1,27 @@
 package com.example.touchauthenticator.data.repository
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import com.example.touchauthenticator.data.api.DatabaseApi
 import com.example.touchauthenticator.data.model.TouchGestureData
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class TouchGestureRepository(
     private val databaseApi: DatabaseApi
-) {
+){
 
-    private fun addRecord(touchData:TouchGestureData) {
-        databaseApi.writeNewData(touchData)
+    private val transactionSuccess: MutableLiveData<String> = databaseApi.transactionSuccess
+
+    fun getSuccessStatus(): MutableLiveData<String> {
+        return transactionSuccess
     }
 
-    fun addRecordInBatch(batchRecord: List<TouchGestureData>) {
-        databaseApi.writeDataInBatch(batchRecord)
+    suspend fun addRecordInBatch(user: FirebaseUser, batchRecord: List<TouchGestureData>) {
+        withContext(Dispatchers.IO) {
+            databaseApi.writeDataInBatch(user, batchRecord)
+        }
     }
-
 }

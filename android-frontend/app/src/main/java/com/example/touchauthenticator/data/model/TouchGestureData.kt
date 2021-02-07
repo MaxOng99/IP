@@ -2,7 +2,6 @@ package com.example.touchauthenticator.data.model
 
 
 data class TouchGestureData(
-    var userId: String,
     var data: List<Pair<RawData, RawData>>
 ) {
 
