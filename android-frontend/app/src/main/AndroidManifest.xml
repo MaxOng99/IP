@@ -20,6 +20,10 @@
         </activity>
         <activity android:name=".ui.enrolment.EnrolmentActivity">
         </activity>
+        <activity android:name=".ui.enrolment.ReactionActivity">
+        </activity>
+        <activity android:name=".ui.enrolment.KeystrokeActivity">
+        </activity>
     </application>
 
 </manifest>
