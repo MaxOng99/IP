@@ -17,6 +17,7 @@ class ReactionActivity: EnrolmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.enrolmentActivity = "reaction"
         instruction.text = "Tap the highlighted box"
         this.initialiseButtons()
         this.initialiseObservers()

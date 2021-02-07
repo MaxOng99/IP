@@ -13,6 +13,7 @@ class KeystrokeActivity: EnrolmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.enrolmentActivity = "keystroke"
         instruction.text = "Tap 3244 ten times"
         this.initialiseButtons()
         this.initialiseObservers()

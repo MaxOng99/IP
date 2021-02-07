@@ -19,8 +19,8 @@ class DatabaseApi {
         transactionSuccess.value = ""
     }
 
-    fun writeDataInBatch(user: FirebaseUser, touchDataRecords: List<TouchGestureData>) {
-        database.child(user.uid).push().setValue(touchDataRecords).addOnCompleteListener { task ->
+    fun writeDataInBatch(user: FirebaseUser, touchDataRecords: List<TouchGestureData>, activity:String) {
+        database.child(user.uid).child(activity).push().setValue(touchDataRecords).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 transactionSuccess.postValue("success")
             } else{

@@ -19,9 +19,9 @@ class TouchGestureRepository(
         return transactionSuccess
     }
 
-    suspend fun addRecordInBatch(user: FirebaseUser, batchRecord: List<TouchGestureData>) {
+    suspend fun addRecordInBatch(user: FirebaseUser, batchRecord: List<TouchGestureData>, activity:String) {
         withContext(Dispatchers.IO) {
-            databaseApi.writeDataInBatch(user, batchRecord)
+            databaseApi.writeDataInBatch(user, batchRecord, activity)
         }
     }
 }

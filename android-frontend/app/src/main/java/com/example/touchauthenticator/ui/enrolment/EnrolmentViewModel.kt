@@ -23,9 +23,11 @@ open class EnrolmentViewModel(
     private var _numberOfTaps = 4
     var _numberOfSamples = 4
 
+
     /** Variables that keep track of UI state*/
     private var counter = Counter()
     var completedSamples = MutableLiveData<Int>()
+    lateinit var enrolmentActivity: String
 
     /** Backend data */
     private var upEvents = ArrayList<TouchGestureData.RawData>()
@@ -92,7 +94,7 @@ open class EnrolmentViewModel(
      * Send the recorded touch gesture samples to the repository to be saved permanently.
      */
     private suspend fun uploadData() {
-        touchGestureRepository.addRecordInBatch(currentUser, touchGestureSamples)
+        touchGestureRepository.addRecordInBatch(currentUser, touchGestureSamples, enrolmentActivity)
     }
 
     /**
