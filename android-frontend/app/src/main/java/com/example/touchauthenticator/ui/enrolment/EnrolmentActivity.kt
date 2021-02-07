@@ -24,6 +24,7 @@ abstract class EnrolmentActivity : AppCompatActivity() {
     lateinit var rootLayout: ConstraintLayout
     lateinit var dialog:AlertDialog
     lateinit var progress: TextView
+    lateinit var instruction: TextView
     lateinit var buttons:ArrayList<MaterialButton>
 
     /* Variables that track UI status */
@@ -40,6 +41,7 @@ abstract class EnrolmentActivity : AppCompatActivity() {
         progress = findViewById(R.id.progress)
         gridLayout = findViewById(R.id.gridLayout)
         rootLayout = findViewById(R.id.rootLayout)
+        instruction = findViewById(R.id.instruction)
 
         buttons = ArrayList()
         createAlertDialog()

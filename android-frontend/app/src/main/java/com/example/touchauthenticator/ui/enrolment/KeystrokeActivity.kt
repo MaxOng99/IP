@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.Toast
+import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.android.material.button.MaterialButton
 
@@ -12,6 +13,7 @@ class KeystrokeActivity: EnrolmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        instruction.text = "Tap 3244 ten times"
         this.initialiseButtons()
         this.initialiseObservers()
     }
@@ -38,6 +40,7 @@ class KeystrokeActivity: EnrolmentActivity() {
         for (i in 0..8) {
             val id = resources.getIdentifier("btn$i", "id", packageName)
             val button: MaterialButton = findViewById(id)
+            button.text = (i+1).toString()
             buttons.add(button)
 
             /** Capture raw touch gesture data*/
@@ -48,20 +51,25 @@ class KeystrokeActivity: EnrolmentActivity() {
                 when (motionEvent.action) {
                     MotionEvent.ACTION_DOWN -> {
 
-                        if (index == currentIndex) {
-                            inBound = true
-                            viewModel.recordEvent(index, motionEvent)
-                        } else {
-                            viewModel.resetSample()
-                            shakeEffect()
-                        }
+                        inBound = true
+                        viewModel.recordEvent(index, motionEvent)
                         true
                     }
 
+                    MotionEvent.ACTION_MOVE -> {
+                        btn.backgroundTintList = resources.getColorStateList(R.color.activatedBgColor, null)
+                        true
+                    }
+
+                    MotionEvent.ACTION_OUTSIDE -> {
+                        shakeEffect()
+                        true
+                    }
                     MotionEvent.ACTION_UP -> {
                         if (inBound) {
                             viewModel.recordEvent(index, motionEvent)
                             inBound = false
+                            btn.backgroundTintList = resources.getColorStateList(R.color.buttonBackgroundColor, null)
                         }
                         true
                     }
