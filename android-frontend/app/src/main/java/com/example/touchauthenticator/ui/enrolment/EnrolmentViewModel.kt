@@ -3,9 +3,12 @@ package com.example.touchauthenticator.ui.enrolment
 import android.view.MotionEvent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.touchauthenticator.data.repository.TouchGestureRepository
 import com.example.touchauthenticator.data.model.TouchGestureData
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 import kotlin.properties.Delegates
 
@@ -18,7 +21,7 @@ open class EnrolmentViewModel(
      * and the number of samples to be collected during enrolment
      */
     private var _numberOfTaps = 4
-    private var _numberOfSamples = 4
+    var _numberOfSamples = 4
 
     /** Variables that keep track of UI state*/
     private var counter = Counter()
@@ -28,7 +31,7 @@ open class EnrolmentViewModel(
     private var upEvents = ArrayList<TouchGestureData.RawData>()
     private var downEvents = ArrayList<TouchGestureData.RawData>()
     private var touchGestureSamples = ArrayList<TouchGestureData>()
-    var successStatus = touchGestureRepository.getSuccessStatus()
+    var successStatus:MutableLiveData<String> = touchGestureRepository.getSuccessStatus()
     lateinit var currentUser: FirebaseUser
 
     init {
@@ -80,7 +83,7 @@ open class EnrolmentViewModel(
         for (i in 0 until downEvents.size) {
             sample.add(Pair(downEvents[i], upEvents[i]))
         }
-        touchGestureSamples.add(TouchGestureData(currentUser.uid, sample))
+        touchGestureSamples.add(TouchGestureData(sample))
         downEvents.clear()
         upEvents.clear()
     }
@@ -88,8 +91,8 @@ open class EnrolmentViewModel(
     /**
      * Send the recorded touch gesture samples to the repository to be saved permanently.
      */
-    private fun uploadData() {
-        touchGestureRepository.addRecordInBatch(touchGestureSamples)
+    private suspend fun uploadData() {
+        touchGestureRepository.addRecordInBatch(currentUser, touchGestureSamples)
     }
 
     /**
@@ -107,11 +110,14 @@ open class EnrolmentViewModel(
          * is successfully submitted by the user.
          */
         private var completedSamples: Int by Delegates.observable(0) { _, _, _ ->
-            this@EnrolmentViewModel.completedSamples.value = completedSamples
-            commitSample()
 
-            if (completedSamples == _numberOfSamples) {
-                uploadData()
+            viewModelScope.launch {
+                this@EnrolmentViewModel.completedSamples.postValue( completedSamples)
+                commitSample()
+
+                if (completedSamples == _numberOfSamples) {
+                    uploadData()
+                }
             }
         }
 
