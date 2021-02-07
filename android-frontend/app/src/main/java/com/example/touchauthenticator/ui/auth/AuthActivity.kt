@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 import com.example.touchauthenticator.R
 import com.example.touchauthenticator.ui.home.HomeActivity
+import com.example.touchauthenticator.utility.ActivityLauncher
 import com.example.touchauthenticator.utility.ServiceLocator
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -53,9 +54,8 @@ class AuthActivity:AppCompatActivity() {
         if (authTask.isSuccessful) {
             Toast.makeText(baseContext, "Authentication success.",
                 Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.putExtra("user", viewModel.getAuthorizedUser())
-            startActivity(intent)
+
+            viewModel.getAuthorizedUser()?.let { ActivityLauncher.launchHomeActivity(this, it) }
             this.finish()
         } else {
             Toast.makeText(baseContext, "Authentication failed.",
