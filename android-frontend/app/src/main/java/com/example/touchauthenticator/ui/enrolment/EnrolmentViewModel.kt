@@ -21,7 +21,7 @@ open class EnrolmentViewModel(
      * and the number of samples to be collected during enrolment
      */
     var _numberOfTaps = 4
-    private var _numberOfSamples = 10
+    var _numberOfSamples = 10
 
 
     /** Variables that keep track of UI state*/

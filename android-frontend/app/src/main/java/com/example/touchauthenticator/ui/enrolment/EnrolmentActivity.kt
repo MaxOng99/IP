@@ -49,6 +49,10 @@ abstract class EnrolmentActivity : AppCompatActivity() {
 
     open fun initialiseObservers() {
         val sampleCounterObserver = androidx.lifecycle.Observer<Int> { newCounter ->
+
+            if (newCounter == viewModel._numberOfSamples) {
+                enableButtons(false)
+            }
             progress.text = "$newCounter/10"
         }
         viewModel.completedSamples.observe(this, sampleCounterObserver)
