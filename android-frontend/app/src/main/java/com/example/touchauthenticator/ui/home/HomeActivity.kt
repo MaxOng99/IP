@@ -26,7 +26,11 @@ class HomeActivity: AppCompatActivity() {
     }
 
     fun launchStatisticsUI(view: View) {
-        ActivityLauncher.launchTestingActivity()
+        ActivityLauncher.launchStatisticsActivity()
+    }
+
+    fun logout(view: View) {
+        ActivityLauncher.launchAuthActivity(this)
     }
 
 }
