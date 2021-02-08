@@ -92,11 +92,11 @@ class ReactionActivity: EnrolmentActivity() {
         }
         val index = Random.nextInt(9);
         val btn = buttons[index]
-        //val myAnim: Animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        val myAnim: Animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         btn.backgroundTintList = resources.getColorStateList(R.color.activatedBgColor, null)
         currentIndex = index
-        //btn.startAnimation(myAnim);
+        btn.startAnimation(myAnim);
 
     }
 }
