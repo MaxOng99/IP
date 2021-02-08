@@ -78,7 +78,7 @@ class KeystrokeActivity: EnrolmentActivity() {
                         else{
                             updatePinTracker("reset")
                             viewModel.resetSample()
-                            shakeEffect()
+                            disableUI()
                         }
 
                         true
@@ -91,7 +91,7 @@ class KeystrokeActivity: EnrolmentActivity() {
                     }
 
                     MotionEvent.ACTION_OUTSIDE -> {
-                        shakeEffect()
+                        disableUI()
                         true
                     }
                     MotionEvent.ACTION_UP -> {

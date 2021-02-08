@@ -54,13 +54,20 @@ abstract class EnrolmentActivity : AppCompatActivity() {
         viewModel.completedSamples.observe(this, sampleCounterObserver)
     }
 
-    fun shakeEffect() {
+    private fun enableButtons(state: Boolean) {
+        for (button in buttons) {
+            button.isClickable = state
+            button.isEnabled = state
+        }
+    }
+    fun disableUI() {
+        enableButtons(false)
         val shake: Animation = AnimationUtils.loadAnimation(
             applicationContext,
             R.anim.shake
         )
-        gridLayout.startAnimation(shake)
 
+        gridLayout.startAnimation(shake)
         dialog.show()
     }
 
@@ -74,7 +81,11 @@ abstract class EnrolmentActivity : AppCompatActivity() {
 
         builder?.setPositiveButton(
             "OK",
-            DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() })
+            DialogInterface.OnClickListener { dialog, _ ->
+                dialog.cancel()
+                enableButtons(true)
+            }
+        )
 
         dialog = builder?.create()!!
         dialog.setCancelable(false)

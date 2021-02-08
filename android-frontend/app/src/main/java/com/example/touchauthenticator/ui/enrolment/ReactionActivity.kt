@@ -55,21 +55,19 @@ class ReactionActivity: EnrolmentActivity() {
 
                 when (motionEvent.action) {
                     MotionEvent.ACTION_DOWN -> {
-
                         if (index == currentIndex) {
                             inBound = true
                             viewModel.recordEvent(index, motionEvent)
-                            btn.backgroundTintList = resources.getColorStateList(R.color.buttonBackgroundColor, null)
                             generateStimuli()
                         } else {
                             viewModel.resetSample()
-                            shakeEffect()
+                            disableUI()
                         }
                         true
                     }
 
                     MotionEvent.ACTION_OUTSIDE -> {
-                        shakeEffect()
+                        disableUI()
                         true
                     }
 
@@ -89,6 +87,9 @@ class ReactionActivity: EnrolmentActivity() {
     @SuppressLint("ResourceAsColor", "NewApi")
     private fun generateStimuli() {
 
+        if (currentIndex != -1) {
+            buttons[currentIndex].backgroundTintList = resources.getColorStateList(R.color.buttonBackgroundColor, null)
+        }
         val index = Random.nextInt(9);
         val btn = buttons[index]
         //val myAnim: Animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
