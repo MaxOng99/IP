@@ -8,6 +8,7 @@ import com.example.touchauthenticator.data.model.TouchGestureData
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class TouchGestureRepository(
     private val databaseApi: DatabaseApi

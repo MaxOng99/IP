@@ -1,8 +1,9 @@
 package com.example.touchauthenticator.data.model
 
-
 data class TouchGestureData(
-    var data: List<Pair<RawData, RawData>>
+    var data: List<HashMap<String, Number>>,
+    var date: String,
+    var sampleId: Int,
 ) {
 
     class RawData(
@@ -18,5 +19,4 @@ data class TouchGestureData(
         }
 
     }
-
 }

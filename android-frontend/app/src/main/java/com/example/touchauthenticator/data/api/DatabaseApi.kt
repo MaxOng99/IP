@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.touchauthenticator.data.model.TouchGestureData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
+import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -23,15 +24,22 @@ class DatabaseApi {
         transactionSuccess.value = ""
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun writeDataInBatch(user: FirebaseUser, touchDataRecords: List<TouchGestureData>, activity:String) {
-        val currentTimestamp = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd MM YYYY")
-        val formatted = currentTimestamp.format(formatter)
-        database.child(activity).child(user.uid).child(formatted).setValue(touchDataRecords).addOnCompleteListener { task ->
+
+        var userId = user.uid
+        var updatedUserData = HashMap<String, Any>()
+
+        for (record in touchDataRecords) {
+            var newRecord = database.child(activity).child(userId).push()
+            var newRecordKey = newRecord.key
+            updatedUserData["$activity/$userId/$newRecordKey"] = record
+        }
+
+        database.updateChildren(updatedUserData).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 transactionSuccess.postValue("success")
-            } else{
+            }
+            else {
                 transactionSuccess.postValue("failed")
             }
         }

@@ -1,5 +1,6 @@
 package com.example.touchauthenticator.ui.enrolment
 
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,9 @@ import com.example.touchauthenticator.data.model.TouchGestureData
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 import kotlin.properties.Delegates
 
@@ -23,13 +27,14 @@ open class EnrolmentViewModel(
     var _numberOfTaps = 4
     var _numberOfSamples = 10
 
-
     /** Variables that keep track of UI state*/
     private var counter = Counter()
     var completedSamples = MutableLiveData<Int>()
     lateinit var enrolmentActivity: String
 
     /** Backend data */
+    @SuppressLint("NewApi")
+    private var currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))
     private var upEvents = ArrayList<TouchGestureData.RawData>()
     private var downEvents = ArrayList<TouchGestureData.RawData>()
     private var touchGestureSamples = ArrayList<TouchGestureData>()
@@ -81,11 +86,28 @@ open class EnrolmentViewModel(
      * a single sample. This new sample will be stored in memory.
      */
     private fun commitSample() {
-        val sample = ArrayList<Pair<TouchGestureData.RawData, TouchGestureData.RawData>>()
+
+        var sample = ArrayList<HashMap<String, Number>>()
+
         for (i in 0 until downEvents.size) {
-            sample.add(Pair(downEvents[i], upEvents[i]))
+            var touchData = HashMap<String, Number>()
+            touchData["index"] = downEvents[i].index
+            touchData["tapCount"] = i
+
+            touchData["downTimestamp"] = downEvents[i].timestamp
+            touchData["downPressure"] = downEvents[i].pressure
+            touchData["downX"] = downEvents[i].x
+            touchData["downY"] = downEvents[i].y
+
+            touchData["upTimestamp"] = upEvents[i].timestamp
+            touchData["upPressure"] = upEvents[i].pressure
+            touchData["upX"] = upEvents[i].x
+            touchData["upY"] = upEvents[i].y
+
+            sample.add(touchData)
         }
-        touchGestureSamples.add(TouchGestureData(sample))
+
+        touchGestureSamples.add(TouchGestureData(sample, currentTime, completedSamples.value!!))
         downEvents.clear()
         upEvents.clear()
     }
