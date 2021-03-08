@@ -1,6 +1,7 @@
 package com.example.touchauthenticator.ui.enrolment
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.MotionEvent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +12,6 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -107,11 +107,14 @@ open class EnrolmentViewModel(
      */
     private fun commitSample() {
 
-        var sample = ArrayList<HashMap<String, Number>>()
+        var sample = arrayOfNulls<HashMap<String, Number>>(4)
+        var duplicateEncountered = false
 
         for (i in 0 until downEvents.size) {
             var touchData = HashMap<String, Number>()
-            touchData["index"] = downEvents[i].index
+            val index = downEvents[i].index
+
+            touchData["index"] = index
             touchData["tapCount"] = i
 
             touchData["downTimestamp"] = downEvents[i].timestamp
@@ -124,10 +127,22 @@ open class EnrolmentViewModel(
             touchData["upX"] = upEvents[i].x
             touchData["upY"] = upEvents[i].y
 
-            sample.add(touchData)
+            when (index) {
+                2 -> sample[0] = touchData
+                1 -> sample[1] = touchData
+                3 -> {
+                    if (!duplicateEncountered) {
+                        sample[2] = touchData
+                        duplicateEncountered = true
+                    }
+                    else{
+                        sample[3] = touchData
+                    }
+                }
+            }
         }
 
-        touchGestureSamples.add(TouchGestureData(sample, currentTime, completedSamples.value!!))
+        touchGestureSamples.add(TouchGestureData(sample.toList() as List<HashMap<String, Number>>, currentTime, completedSamples.value!!))
         downEvents.clear()
         upEvents.clear()
     }
