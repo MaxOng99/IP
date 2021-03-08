@@ -2,7 +2,6 @@ package com.example.touchauthenticator.ui.enrolment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -10,7 +9,6 @@ import android.widget.Toast
 import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.android.material.button.MaterialButton
-import kotlin.random.Random
 
 class ReactionActivity: EnrolmentActivity() {
 
@@ -21,13 +19,12 @@ class ReactionActivity: EnrolmentActivity() {
         instruction.text = "Tap the highlighted box"
         this.initialiseButtons()
         this.initialiseObservers()
-        this.generateStimuli()
     }
 
     override fun initialiseObservers() {
         super.initialiseObservers()
 
-        val observer = androidx.lifecycle.Observer<String> { dataSentToCloud ->
+        val successStatusObserver = androidx.lifecycle.Observer<String> { dataSentToCloud ->
             if (dataSentToCloud == "success") {
                 Toast.makeText(baseContext, "Data sent successfully.",
                     Toast.LENGTH_SHORT).show()
@@ -39,8 +36,15 @@ class ReactionActivity: EnrolmentActivity() {
                     Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel.successStatus.observe(this, observer)
+
+        val indexObserver = androidx.lifecycle.Observer<Int> { index ->
+            generateStimuli(index)
+        }
+
+        viewModel.successStatus.observe(this, successStatusObserver)
+        viewModel.currIndex.observe(this, indexObserver)
     }
+
     @SuppressLint("ClickableViewAccessibility", "NewApi")
     override fun initialiseButtons() {
         for (i in 0..8) {
@@ -58,7 +62,6 @@ class ReactionActivity: EnrolmentActivity() {
                         if (index == currentIndex) {
                             inBound = true
                             viewModel.recordEvent(index, motionEvent)
-                            generateStimuli()
                         } else {
                             viewModel.resetSample()
                             disableUI()
@@ -85,18 +88,18 @@ class ReactionActivity: EnrolmentActivity() {
     }
 
     @SuppressLint("ResourceAsColor", "NewApi")
-    private fun generateStimuli() {
+    private fun generateStimuli(index: Int) {
 
         if (currentIndex != -1) {
             buttons[currentIndex].backgroundTintList = resources.getColorStateList(R.color.buttonBackgroundColor, null)
         }
-        val index = Random.nextInt(9);
+        //val index = Random.nextInt(9);
+        val index = index
         val btn = buttons[index]
         val myAnim: Animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         btn.backgroundTintList = resources.getColorStateList(R.color.activatedBgColor, null)
         currentIndex = index
         btn.startAnimation(myAnim);
-
     }
 }

@@ -8,11 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.touchauthenticator.data.repository.TouchGestureRepository
 import com.example.touchauthenticator.data.model.TouchGestureData
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 import kotlin.properties.Delegates
 
@@ -30,7 +31,24 @@ open class EnrolmentViewModel(
     /** Variables that keep track of UI state*/
     private var counter = Counter()
     var completedSamples = MutableLiveData<Int>()
+    var currIndex = MutableLiveData<Int>()
     lateinit var enrolmentActivity: String
+
+    /** Variables that keep track of reaction time UI state */
+    var reactionArray = IntArray(4)
+
+    private fun initReactionArray() {
+        reactionArray[0] = 3
+        reactionArray[1] = 2
+        reactionArray[2] = 1
+        reactionArray[3] = 3
+
+        this.shuffle()
+    }
+
+    private fun shuffle() {
+        reactionArray.shuffle()
+    }
 
     /** Backend data */
     @SuppressLint("NewApi")
@@ -42,7 +60,9 @@ open class EnrolmentViewModel(
     lateinit var currentUser: FirebaseUser
 
     init {
+        initReactionArray()
         completedSamples.value = 0
+        currIndex.value = this.reactionArray[counter.offset]
     }
 
     /**
@@ -127,7 +147,14 @@ open class EnrolmentViewModel(
      */
     inner class Counter(
     ) {
-        private var offset: Int = 0
+        var offset: Int by Delegates.observable(0) { _, _, _ ->
+
+            if (offset == 4) {
+                resetOffset()
+            }
+
+            this@EnrolmentViewModel.currIndex.postValue(reactionArray[offset])
+        }
 
         /**
          * Notifies the view model to commit data whenever a sample
@@ -160,6 +187,7 @@ open class EnrolmentViewModel(
          * To be called when users' made an error during enrolment.
          */
         fun resetOffset() {
+            this@EnrolmentViewModel.shuffle()
             offset = 0
         }
     }
