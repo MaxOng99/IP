@@ -1,2 +1,2 @@
-runtime: python38
+runtime: python37
 entrypoint: hypercorn main:app
