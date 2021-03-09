@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Header
-from firebase_amdin import auth
+from firebase_admin  import auth
 
 
 app = FastAPI()
