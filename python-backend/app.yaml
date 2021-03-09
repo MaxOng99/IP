@@ -1,0 +1,5 @@
+runtime: python38
+entrypoint: hypercorn main:app
+
+env_variables:
+  GCLOUD_PROJECT: 'ta-project-301801'
