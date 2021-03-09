@@ -1,2 +1,2 @@
 runtime: python37
-entrypoint: uvicorn --port $PORT main:app
+entrypoint: uvicorn --host 0.0.0.0 --port $PORT main:app
