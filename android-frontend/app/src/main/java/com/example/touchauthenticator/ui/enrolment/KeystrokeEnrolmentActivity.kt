@@ -8,7 +8,7 @@ import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.android.material.button.MaterialButton
 
-class KeystrokeActivity: EnrolmentActivity() {
+class KeystrokeEnrolmentActivity: EnrolmentActivity() {
 
     private var counterToPinIndexMap = hashMapOf<Int, Int>(1 to 2, 2 to 1, 3 to 3, 4 to 3)
     private var tapTracker = 0

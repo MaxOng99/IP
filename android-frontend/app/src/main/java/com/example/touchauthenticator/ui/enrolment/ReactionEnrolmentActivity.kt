@@ -10,7 +10,7 @@ import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.android.material.button.MaterialButton
 
-class ReactionActivity: EnrolmentActivity() {
+class ReactionEnrolmentActivity: EnrolmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

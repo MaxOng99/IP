@@ -5,7 +5,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="testphase-feature"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -20,9 +20,13 @@
         </activity>
         <activity android:name=".ui.enrolment.EnrolmentActivity">
         </activity>
-        <activity android:name=".ui.enrolment.ReactionActivity">
+        <activity android:name=".ui.enrolment.ReactionEnrolmentActivity">
         </activity>
-        <activity android:name=".ui.enrolment.KeystrokeActivity">
+        <activity android:name=".ui.enrolment.KeystrokeEnrolmentActivity">
+        </activity>
+        <activity android:name=".ui.test.KeystrokeTestActivity">
+        </activity>
+        <activity android:name=".ui.test.ReactionTestActivity">
         </activity>
     </application>
 

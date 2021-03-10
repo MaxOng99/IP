@@ -18,11 +18,11 @@ class HomeActivity: AppCompatActivity() {
     }
 
     fun launchEnrolmentUI(view: View) {
-        ActivityLauncher.launchReactionActivity(this, viewModel.currentUser)
+        ActivityLauncher.launchReactionEnrolmentActivity(this, viewModel.currentUser)
     }
 
     fun launchTestingUI(view: View) {
-        ActivityLauncher.launchTestingActivity()
+        ActivityLauncher.launchReactionTestActivity(this, viewModel.currentUser)
     }
 
     fun launchStatisticsUI(view: View) {

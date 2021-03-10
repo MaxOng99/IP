@@ -3,22 +3,24 @@ package com.example.touchauthenticator.utility
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.touchauthenticator.ui.auth.AuthActivity
-import com.example.touchauthenticator.ui.enrolment.KeystrokeActivity
-import com.example.touchauthenticator.ui.enrolment.ReactionActivity
+import com.example.touchauthenticator.ui.enrolment.KeystrokeEnrolmentActivity
+import com.example.touchauthenticator.ui.enrolment.ReactionEnrolmentActivity
 import com.example.touchauthenticator.ui.home.HomeActivity
+import com.example.touchauthenticator.ui.test.KeystrokeTestActivity
+import com.example.touchauthenticator.ui.test.ReactionTestActivity
 import com.google.firebase.auth.FirebaseUser
 
 object ActivityLauncher {
 
     fun launchKeystrokeActivity(activity: AppCompatActivity, currentUser:FirebaseUser) {
-        val intent = Intent(activity, KeystrokeActivity::class.java)
+        val intent = Intent(activity, KeystrokeEnrolmentActivity::class.java)
         intent.putExtra("user", currentUser)
         activity.startActivity(intent)
         activity.finish()
     }
 
-    fun launchReactionActivity(activity: AppCompatActivity, currentUser: FirebaseUser) {
-        val intent = Intent(activity, ReactionActivity::class.java)
+    fun launchReactionEnrolmentActivity(activity: AppCompatActivity, currentUser: FirebaseUser) {
+        val intent = Intent(activity, ReactionEnrolmentActivity::class.java)
         intent.putExtra("user", currentUser)
         activity.startActivity(intent)
         activity.finish()
@@ -37,8 +39,18 @@ object ActivityLauncher {
         activity.finish()
     }
 
-    fun launchTestingActivity() {
+    fun launchReactionTestActivity(activity: AppCompatActivity, currentUser: FirebaseUser) {
+        val intent = Intent(activity, ReactionTestActivity::class.java)
+        intent.putExtra("user", currentUser)
+        activity.startActivity(intent)
+        activity.finish()
+    }
 
+    fun launchKeystrokeTestActivity(activity: AppCompatActivity, currentUser: FirebaseUser) {
+        val intent = Intent(activity, KeystrokeTestActivity::class.java)
+        intent.putExtra("user", currentUser)
+        activity.startActivity(intent)
+        activity.finish()
     }
 
     fun launchStatisticsActivity() {
