@@ -43,7 +43,7 @@ app = FastAPI()
 def index():
 	return {'key': 'value'}
 
-@app.post('/predict', response_model=Response)
+@app.post('/predict')
 def predict(request: Request, jwt_token = Header(None)):
 
 	try:
@@ -62,6 +62,7 @@ def predict(request: Request, jwt_token = Header(None)):
 
 		return response
 		"""
+		temp_response = Response()
 		return "auth success"
 
 	except InvalidIdTokenError:
