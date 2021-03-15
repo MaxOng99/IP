@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.android.material.button.MaterialButton
@@ -36,6 +37,14 @@ class KeystrokeTestActivity: TestActivity() {
             }
         }
         viewModel.successStatus.observe(this, observer)
+        viewModel.predictionResponse.observe(this, Observer { response ->
+
+            response.body()?.let {
+                ActivityLauncher.launchResultActivity(this, viewModel.currentLegitimateUser,
+                    it, "end"
+                )
+            }
+        })
     }
 
     private fun updatePinTracker(params:String) {

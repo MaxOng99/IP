@@ -8,9 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.touchauthenticator.data.repository.TouchGestureRepository
 import com.example.touchauthenticator.data.model.TouchGestureData
-import com.example.touchauthenticator.ui.auth.TouchDynamicsApi
+import com.example.touchauthenticator.data.api.TouchDynamicsApi
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
@@ -27,11 +28,12 @@ class TestViewModel(
      * and the number of samples to be collected during enrolment
      */
     var _numberOfTaps:Int = 4
-    var _numberOfSamples:Int = 10
+    var _numberOfSamples:Int = 1
 
     /** Variables that keep track of UI state*/
     private var counter = Counter()
     var completedSamples = MutableLiveData<Int>()
+    var predictionResponse: MutableLiveData<Response<HashMap<String, String>>> = MutableLiveData()
     var completedUsers = MutableLiveData<ArrayList<Int>>()
     var currIndex = MutableLiveData<Int>()
     lateinit var testActivity: String
@@ -68,6 +70,7 @@ class TestViewModel(
     private var currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))
     private var upEvents = ArrayList<TouchGestureData.RawData>()
     private var downEvents = ArrayList<TouchGestureData.RawData>()
+    lateinit var predictionResults: Response<HashMap<String, String>>
     private var userSampleMapping = hashMapOf<Int, ArrayList<TouchGestureData>>(
         1 to ArrayList(),
         2 to ArrayList(),
@@ -172,18 +175,21 @@ class TestViewModel(
     /**
      * Send the recorded touch gesture samples to the repository to be saved permanently.
      */
-    private suspend fun uploadData() {
+    private suspend fun uploadData():Response<HashMap<String, String>> {
 
         when (testActivity) {
             "keystroke" -> {
-                touchDynamicsApi.getKeystrokePrediction(currentLegitimateUser, userSampleMapping)
+                //touchDynamicsApi.getKeystrokePrediction(JWT_TOKEN, RequestWrapper(userSampleMapping))
+                //val result = touchDynamicsApi.getRoot()
             }
 
             "reaction" -> {
-                touchDynamicsApi.getReactionPrediction(currentLegitimateUser, userSampleMapping)
+                //touchDynamicsApi.getReactionPrediction(JWT_TOKEN, RequestWrapper(userSampleMapping))
+                //val result = touchDynamicsApi.getRoot()
             }
         }
 
+        return touchDynamicsApi.getRoot()
     }
 
     /**
@@ -218,6 +224,11 @@ class TestViewModel(
                         val temp = completedUsers.value!!
                         temp.add(currentTestUser-1)
                         completedUsers.postValue(temp)
+
+                        if (completedUsers.value!!.size == 4) {
+                            val response = uploadData()
+                            predictionResponse.postValue(response)
+                        }
                     }
                 }
             }

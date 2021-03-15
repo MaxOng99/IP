@@ -1,8 +1,11 @@
 package com.example.touchauthenticator.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class TouchGestureData(
     var data: List<HashMap<String, Number>>,
     var date: String,
+    @SerializedName("sample_id")
     var sampleId: Int,
 ) {
 

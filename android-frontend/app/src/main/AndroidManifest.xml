@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.touchauthenticator">
 
+    <uses-permission android:name="android.perimssion.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,6 +28,8 @@
         <activity android:name=".ui.test.KeystrokeTestActivity">
         </activity>
         <activity android:name=".ui.test.ReactionTestActivity">
+        </activity>
+        <activity android:name=".ui.result.ResultActivity">
         </activity>
     </application>
 

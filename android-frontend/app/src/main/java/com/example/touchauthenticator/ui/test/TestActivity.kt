@@ -15,10 +15,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.gridlayout.widget.GridLayout
+import androidx.lifecycle.Observer
 import com.example.touchauthenticator.R
+import com.example.touchauthenticator.utility.ActivityLauncher
 import com.example.touchauthenticator.utility.ServiceLocator
 import com.google.android.material.button.MaterialButton
-import java.text.ParsePosition
 import kotlin.collections.ArrayList
 
 
@@ -97,17 +98,7 @@ abstract class TestActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             }
         }
 
-        val completedUserObserver = androidx.lifecycle.Observer<ArrayList<Int>> { completedUsers ->
-
-            for (idx in completedUsers) {
-                spinner.adapter.getView(idx, null, spinner).isEnabled = false
-            }
-        }
-
-        viewModel.completedUsers.observe(this, completedUserObserver)
         viewModel.completedSamples.observe(this, sampleCounterObserver)
-
-
     }
 
     private fun enableButtons(state: Boolean) {

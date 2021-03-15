@@ -1,6 +1,5 @@
 package com.example.touchauthenticator.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -53,7 +52,9 @@ class AuthActivity:AppCompatActivity() {
         if (authTask.isSuccessful) {
             Toast.makeText(baseContext, "Authentication success.",
                 Toast.LENGTH_SHORT).show()
-            viewModel.getAuthorizedUser()?.let { ActivityLauncher.launchHomeActivity(this, it) }
+            viewModel.storeJwtToken()
+            val currentUser = viewModel.getAuthorizedUser()
+            ActivityLauncher.launchHomeActivity(this, currentUser!!)
         } else {
             Toast.makeText(baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT).show()

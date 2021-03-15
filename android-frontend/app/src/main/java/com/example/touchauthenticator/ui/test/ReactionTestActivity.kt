@@ -7,6 +7,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ActivityLauncher
 import com.google.android.material.button.MaterialButton
@@ -44,6 +45,14 @@ class ReactionTestActivity: TestActivity() {
 
         viewModel.successStatus.observe(this, successStatusObserver)
         viewModel.currIndex.observe(this, indexObserver)
+        viewModel.predictionResponse.observe(this, Observer { response ->
+
+            response.body()?.let {
+                ActivityLauncher.launchResultActivity(this, viewModel.currentLegitimateUser,
+                    it, "keystroke"
+                )
+            }
+        })
     }
 
     @SuppressLint("ClickableViewAccessibility", "NewApi")
