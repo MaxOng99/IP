@@ -62,7 +62,6 @@ def predict(request: Request, jwt_token = Header(None)):
 
 		return response
 		"""
-		temp_response = Response()
 		return "auth success"
 
 	except InvalidIdTokenError:
