@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Header
 from firebase_admin.auth import InvalidIdTokenError
+from firebase_admin import auth
 from pydantic import BaseModel
 from typing import Mapping, List
 import pickle
@@ -31,7 +32,9 @@ def authenticate(jwt_token):
 	return decoded_token['uid']
 
 ## App Initialisation
+default_app = firebase_admin.initialize_app()
 app = FastAPI()
+
 #init_models()
 
 ## API Routings
