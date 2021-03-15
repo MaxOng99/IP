@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Header
+import firebase_admin
 from firebase_admin.auth import InvalidIdTokenError
 from firebase_admin import auth
 from pydantic import BaseModel
