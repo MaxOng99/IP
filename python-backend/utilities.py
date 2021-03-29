@@ -3,8 +3,8 @@ from firebase_admin import auth
 from pipeline import DataPreparer, Preprocessor, Evaluator
 
 
-def get_model(uid):
-	with open(f'models/model{id}.pkl', 'rb') as file:
+def get_model(uid, experiment_type):
+	with open(f'ml_models/{experiment_type}/model{id}.pkl', 'rb') as file:
 		return pickle.load(file)
 
 def authenticate(jwt_token):
