@@ -1,0 +1,51 @@
+preprocess:
+    steps:
+        - add_temporal_features
+        - drop_redundant_features
+        - add_statistical_features
+
+    outlier_features:
+    - intertap1
+    - intertap2
+    - intertap3
+    statistical_features:
+    - downX
+    - downY
+    - downPressure
+    - keyhold
+    - intertap
+
+model_tuning:
+  dataset_type: reaction
+  remove_outliers: False
+  ensemble: True
+  model_name: local_outlier_factor
+  features: 
+    - downPressure1
+    - downX1
+    - downY1
+    - downPressure2
+    - downX2
+    - downY2
+    - downPressure3
+    - downX3
+    - downY3
+    - downPressure4
+    - downX4
+    - downY4
+    - keyhold1
+    - keyhold2
+    - keyhold3
+    - keyhold4
+    - intertap1
+    - intertap2
+    - intertap3
+    - avgintertap
+    - avgdownPressure
+    - avgkeyhold
+
+
+
+
+
+
