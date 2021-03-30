@@ -4,10 +4,6 @@ preprocess:
         - drop_redundant_features
         - add_statistical_features
 
-    outlier_features:
-    - intertap1
-    - intertap2
-    - intertap3
     statistical_features:
     - downX
     - downY
@@ -17,8 +13,6 @@ preprocess:
 
 model_tuning:
   dataset_type: reaction
-  remove_outliers: False
-  ensemble: True
   model_name: local_outlier_factor
   features: 
     - downPressure1
@@ -40,6 +34,8 @@ model_tuning:
     - intertap1
     - intertap2
     - intertap3
+    - avgdownX
+    - avgdownY
     - avgintertap
     - avgdownPressure
     - avgkeyhold
