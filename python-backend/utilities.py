@@ -1,7 +1,13 @@
 import pickle
 from firebase_admin import auth
 from pipeline import DataPreparer, Preprocessor, Evaluator
+import google.cloud.logging
+import logging
 
+# Instantiates a client
+client = google.cloud.logging.Client()
+client.get_default_handler()
+client.setup_logging()
 
 def get_model(application_uid, experiment_type):
 	with open(f'ml_models/{experiment_type}/model{application_uid}.pkl', 'rb') as file:
@@ -14,6 +20,9 @@ def authenticate(jwt_token):
 def prepare_data(users_df, experiment_type):
 	users_df = DataPreparer(users_df).users_df
 	preprocessed_reaction_df = {uid: Preprocessor(user_df, experiment_type).df for uid, user_df in users_df.items()}
+
+	for uid, df in preprocessed_reaction_df.items():
+		logging.debug(f'{uid}: {df.columns}')
 	return preprocessed_reaction_df
 
 def evaluate(model, users_df, uid):
