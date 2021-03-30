@@ -31,7 +31,7 @@ def evaluate(model, users_df, uid):
 
 	return evaluation_object 
 
-def get_uid_mapping(self):
+def get_uid_mapping():
 	mapping = {'Ab95qgUrJDe0RNnT5A3ZIb5owEp1': 2,
 	'HMav6t8045fX5g461hTtEVdgF4S2': 3,
 	'QhMRTHq3FHcBDnJzOCcnmyltXKD2': 4,
