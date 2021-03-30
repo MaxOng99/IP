@@ -13,14 +13,13 @@ class DataPreparer:
 
     # Convert raw json data into compatible Pandas DataFrame format
     def prepare_data(self, dataset):
-        users = list(dataset.keys())
+        user_ids = list(dataset.keys())
         userRecords = []
 
-        for user in users:
-            records = dataset[user]
+        for uid in user_ids:
+            records = dataset[uid]
 
             for record in records:
-                uid = self.get_uid_mapping()[user]
                 userRecords.append(self.flatten_record(uid, record))
 
         prepared_df = pd.read_json(json.dumps(userRecords))
