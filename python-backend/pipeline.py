@@ -124,7 +124,7 @@ class Preprocessor:
 
     def drop_redundant_features(self):
 
-        redundant_columns_regex = 'user|date|sample_id|tapCount.*|index.*|up.*|.*Timestamp.*'
+        redundant_columns_regex = 'user|date|sample_id|tapCount.*|index.*|up.*|.*Timestamp.*|keyhold.*|intertap.*|avgkeyhold|avgintertap'
         essential_columns = self.df.columns.drop(list(self.df.filter(regex=redundant_columns_regex)))
 
         self.df = self.df[essential_columns]
@@ -141,7 +141,9 @@ class Preprocessor:
         'downPressure2', 'downX2', 'downY2',
         'downPressure3', 'downX3', 'downY3',
         'downPressure4', 'downX4', 'downY4',
-        'avgdownX', 'avgdownY', 'avgdownPressure']
+        'keyhold1', 'keyhold2', 'keyhold3', 'keyhold4',
+        'intertap1', 'intertap2', 'intertap3',
+        'avgdownX', 'avgdownY', 'avgdownPressure', 'avgkeyhold', 'avgintertap']
 
         self.df = self.df.reindex(columns=column_position)
 
