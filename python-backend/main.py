@@ -24,7 +24,7 @@ def predict(request: UserTGDMapping, jwt_token = Header(None)):
 
 	try:
 		jwt_uid = authenticate(jwt_token)
-		application_uid = get_uid_mapping(jwt_uid)
+		application_uid = get_uid_mapping()[jwt_uid]
 		model = get_model(uid, request.experiment_type)
 		prepared_data = prepare_data(request.user_tgd_map, request.experiment_type)
 		evaluation_object = evaluate(model, prepared_data, application_uid)
