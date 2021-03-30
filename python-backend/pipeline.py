@@ -192,7 +192,7 @@ class Evaluator():
         legitimate_df = self.users_df[self.uid]
         imposters_df = pd.concat([imposter_df for uid, imposter_df in self.users_df.items() if uid != self.uid], axis=0, ignore_index=True)
 
-        X = pd.concat([legitimate_df, imposter_df], axis=0, ignore_index=True)
+        X = pd.concat([legitimate_df, imposters_df], axis=0, ignore_index=True)
         y = np.concatenate(np.repeat(1.0, len(legitimate_df)), np.repeat(-1.0, len(imposters_df)))
         y_predict = self.model.predict(X)
         y_predict_score = self.model.decision_function(X)
