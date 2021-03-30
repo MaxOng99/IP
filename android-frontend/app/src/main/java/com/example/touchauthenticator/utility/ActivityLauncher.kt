@@ -2,6 +2,7 @@ package com.example.touchauthenticator.utility
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.example.touchauthenticator.data.model.ResponseWrapper
 import com.example.touchauthenticator.ui.auth.AuthActivity
 import com.example.touchauthenticator.ui.enrolment.KeystrokeEnrolmentActivity
 import com.example.touchauthenticator.ui.enrolment.ReactionEnrolmentActivity
@@ -10,6 +11,7 @@ import com.example.touchauthenticator.ui.result.ResultActivity
 import com.example.touchauthenticator.ui.test.KeystrokeTestActivity
 import com.example.touchauthenticator.ui.test.ReactionTestActivity
 import com.google.firebase.auth.FirebaseUser
+import com.google.gson.Gson
 
 object ActivityLauncher {
 
@@ -54,10 +56,19 @@ object ActivityLauncher {
         activity.finish()
     }
 
-    fun launchResultActivity(activity: AppCompatActivity, currentUser: FirebaseUser, predictionResult: HashMap<String, String>, nextActivity:String) {
+    fun launchResultActivity(activity: AppCompatActivity, currentUser: FirebaseUser, predictionResult: ResponseWrapper, nextActivity:String) {
         val intent = Intent(activity, ResultActivity::class.java)
         intent.putExtra("user", currentUser)
-        intent.putExtra("predictionResults", predictionResult)
+        intent.putExtra("predictionResults", Gson().toJson(predictionResult))
+        intent.putExtra("nextActivity", nextActivity)
+        activity.startActivity(intent)
+        activity.finish()
+    }
+
+    fun launchResultActivity(activity: AppCompatActivity, currentUser: FirebaseUser, authResult: String, nextActivity:String) {
+        val intent = Intent(activity, ResultActivity::class.java)
+        intent.putExtra("user", currentUser)
+        intent.putExtra("authResult", authResult)
         intent.putExtra("nextActivity", nextActivity)
         activity.startActivity(intent)
         activity.finish()

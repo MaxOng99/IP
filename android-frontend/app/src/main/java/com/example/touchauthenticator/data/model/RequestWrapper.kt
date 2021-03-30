@@ -1,5 +1,6 @@
 package com.example.touchauthenticator.data.model
 
 data class RequestWrapper(
-    val request: HashMap<Int, ArrayList<TouchGestureData>>
+    val experiment_type: String,
+    val user_tgd_map: HashMap<Int, ArrayList<TouchGestureData>>
 )
