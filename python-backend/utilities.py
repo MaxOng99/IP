@@ -30,7 +30,7 @@ def evaluate(model, users_df, uid):
 	evaluation_object = dict()
 
 	for i in range(1, 5):
-		evaluation_object[i] = evaluator.get_prediction_results(i)
+		evaluation_object['predictions'][i] = evaluator.get_prediction_results(i)
 
 	far, frr, eer = evaluator.evaluate()
 	evaluation_object['far'] = far
