@@ -4,7 +4,7 @@ from pipeline import DataPreparer, Preprocessor, Evaluator
 
 
 def get_model(jwt_uid, experiment_type):
-	application_uid = get_uid_mapping[jwt_uid]
+	application_uid = get_uid_mapping()[jwt_uid]
 	with open(f'ml_models/{experiment_type}/model{application_uid}.pkl', 'rb') as file:
 		return pickle.load(file)
 
