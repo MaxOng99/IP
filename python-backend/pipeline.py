@@ -154,7 +154,7 @@ class Evaluator():
         self.users_df = users_df
         self.uid = legitimate_uid
 
-    def calculate_far(y_true, y_pred):
+    def calculate_far(self, y_true, y_pred):
         cm = metrics.confusion_matrix(y_true, y_pred)
         fp = cm[0, 1] 
         tn = cm[0, 0] 
@@ -162,7 +162,7 @@ class Evaluator():
 
         return far
 
-    def calculate_frr(y_true, y_pred):
+    def calculate_frr(self, y_true, y_pred):
         cm = metrics.confusion_matrix(y_true, y_pred)
         fn = cm[1, 0]
         tp = cm[1, 1]
@@ -170,7 +170,7 @@ class Evaluator():
 
         return frr
 
-    def calculate_eer(y_true, y_pred_score):
+    def calculate_eer(self, y_true, y_pred_score):
         fpr, fnr, thresholds = metrics.det_curve(y_true, y_score)
         eer1 = fpr[np.nanargmin(np.absolute(fnr - fpr))]
         eer2 = fnr[np.nanargmin(np.absolute(fnr - fpr))]
