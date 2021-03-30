@@ -2,6 +2,7 @@ import numpy as np
 import yaml
 import json
 import pandas as pd
+from sklearn import metrics
 
 class DataPreparer:
     def __init__(self, dataset):
