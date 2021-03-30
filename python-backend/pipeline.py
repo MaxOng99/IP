@@ -73,6 +73,8 @@ class Preprocessor:
         for step in preprocess_steps:
             self.mapping[step]()
 
+        self.reorder_columns()
+
     def load_params(self):
         with open("params.yaml", 'r') as f:
             return  yaml.safe_load(f)['preprocess']
@@ -132,6 +134,18 @@ class Preprocessor:
         for feature in features:
             temp = [f'{feature}{i}' for i in range(1, 4)] if feature == "intertap" else [f'{feature}{i}' for i in range(1, 5)]
             self.df.loc[:, f'avg{feature}'] = self.df[temp].apply(np.mean, axis=1)
+
+    def reorder_columns(self):
+        column_position = ['downPressure1', 'downX1', 'downY1', 
+        'downPressure2', 'downX2', 'downY2',
+        'downPressure3', 'downX3', 'downY3',
+        'downPressure4', 'downX4', 'downY4',
+        'keyhold1', 'keyhold2', 'keyhold3', 'keyhold4',
+        'intertap1', 'intertap2', 'intertap3',
+        'avgdownX', 'avgdownY', 'avgdownPressure', 'avgkeyhold', 'avgintertap']
+
+        self.df = self.df.reindex(columns=column_position)
+
 
 class Evaluator():
 
