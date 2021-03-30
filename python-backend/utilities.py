@@ -28,10 +28,12 @@ def prepare_data(users_df, experiment_type):
 def evaluate(model, users_df, uid):
 	evaluator = Evaluator(model, users_df, uid)
 	evaluation_object = dict()
+	predictions = dict()
 
 	for i in range(1, 5):
-		evaluation_object[i] = evaluator.get_prediction_results(i)
-
+		predictions[i] = evaluator.get_prediction_results(i)
+	
+	evaluation_object['predictions'] = predictions
 	far, frr, eer = evaluator.evaluate()
 	evaluation_object['far'] = far
 	evaluation_object['frr'] = frr
