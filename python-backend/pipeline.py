@@ -17,7 +17,7 @@ class DataPreparer:
         userRecords = []
 
         for user in users:
-            records = dataset[user].values()
+            records = dataset[user]
 
             for record in records:
                 uid = self.get_uid_mapping()[user]
@@ -33,7 +33,7 @@ class DataPreparer:
         feature_map = dict()
         feature_map['user'] = user
         feature_map['date'] = record['date']
-        feature_map['sampleId'] = record['sampleId']
+        feature_map['sample_id'] = record['sample_id']
 
         tap_data = record['data']
 
