@@ -3,8 +3,9 @@ from firebase_admin import auth
 from pipeline import DataPreparer, Preprocessor, Evaluator
 
 
-def get_model(uid, experiment_type):
-	with open(f'ml_models/{experiment_type}/model{uid}.pkl', 'rb') as file:
+def get_model(jwt_uid, experiment_type):
+	application_uid = get_uid_mapping[jwt_uid]
+	with open(f'ml_models/{experiment_type}/model{application_uid}.pkl', 'rb') as file:
 		return pickle.load(file)
 
 def authenticate(jwt_token):
@@ -29,6 +30,14 @@ def evaluate(model, users_df, uid):
 	evaluation_object['eer'] = eer
 
 	return evaluation_object 
+
+def get_uid_mapping(self):
+	mapping = {'Ab95qgUrJDe0RNnT5A3ZIb5owEp1': 2,
+	'HMav6t8045fX5g461hTtEVdgF4S2': 3,
+	'QhMRTHq3FHcBDnJzOCcnmyltXKD2': 4,
+	'd0BlMgUPQkQFPmAhVeCOaiWaqDB2': 1}
+	return mapping
+
 
 
 
