@@ -141,9 +141,7 @@ class Preprocessor:
         'downPressure2', 'downX2', 'downY2',
         'downPressure3', 'downX3', 'downY3',
         'downPressure4', 'downX4', 'downY4',
-        'keyhold1', 'keyhold2', 'keyhold3', 'keyhold4',
-        'intertap1', 'intertap2', 'intertap3',
-        'avgdownX', 'avgdownY', 'avgdownPressure', 'avgkeyhold', 'avgintertap']
+        'avgdownX', 'avgdownY', 'avgdownPressure']
 
         self.df = self.df.reindex(columns=column_position)
 
