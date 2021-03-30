@@ -18,6 +18,9 @@ def prepare_data(users_df, experiment_type):
 
 def evaluate(model, users_df, uid):
 	evaluator = Evaluator(model, users_df, uid)
+	for uid, df in users_df.items():
+		print(f'{uid}: {df.columns}')
+
 	evaluation_object = dict()
 
 	for i in range(1, 5):
