@@ -36,8 +36,8 @@ model_tuning:
     - intertap3
     - avgdownX
     - avgdownY
-    - avgintertap
     - avgdownPressure
+    - avgintertap
     - avgkeyhold
 
 
