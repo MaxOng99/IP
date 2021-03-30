@@ -184,7 +184,7 @@ class Evaluator():
         X = self.users_df[uid]
         y_true = np.repeat(1.0, len(X)) if uid == self.uid else np.repeat(-1.0, len(X))
         y_pred = self.model.predict(X)
-        accepted_predictions = [prediction for prediction in y_pred if prediction == 1.0]
+        accepted_predictions = [prediction for prediction in y_pred if prediction == -1.0]
 
         return len(accepted_predictions)
 
