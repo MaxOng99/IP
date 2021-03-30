@@ -62,7 +62,6 @@ class Preprocessor:
         mapping = {
             'add_temporal_features': self.add_temporal_features,
             'drop_redundant_features': self.drop_redundant_features,
-            'remove_outliers': self.remove_outliers,
             'add_statistical_features': self.add_statistical_features
         }
 
