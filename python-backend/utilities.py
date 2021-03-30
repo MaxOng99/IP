@@ -22,7 +22,7 @@ def prepare_data(users_df, experiment_type):
 	preprocessed_reaction_df = {uid: Preprocessor(user_df, experiment_type).df for uid, user_df in users_df.items()}
 
 	for uid, df in preprocessed_reaction_df.items():
-		logging.debug(f'{uid}: {df.columns}')
+		logging.info(f'{uid}: {df.columns}')
 	return preprocessed_reaction_df
 
 def evaluate(model, users_df, uid):
