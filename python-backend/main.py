@@ -7,7 +7,7 @@ from firebase_admin.auth import InvalidIdTokenError
 
 # Custom module imports
 from utilities import authenticate
-from utilities import get_model, prepare_data, evaluate
+from utilities import get_model, prepare_data, evaluate, get_uid_mapping
 from data_objects import TouchGestureData, UserTGDMapping, EvaluationResult
 
 ## App Initialisation
@@ -23,10 +23,11 @@ def index():
 def predict(request: UserTGDMapping, jwt_token = Header(None)):
 
 	try:
-		uid = authenticate(jwt_token)
+		jwt_uid = authenticate(jwt_token)
+		application_uid = get_uid_mapping(jwt_uid)
 		model = get_model(uid, request.experiment_type)
 		prepared_data = prepare_data(request.user_tgd_map, request.experiment_type)
-		evaluation_object = evaluate(prepare_data, uid)
+		evaluation_object = evaluate(model, prepared_data, application_uid)
 		return evaluation_object
 
 	except InvalidIdTokenError:
