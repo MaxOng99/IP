@@ -12,9 +12,9 @@ def authenticate(jwt_token):
 	decoded_token = auth.verify_id_token(jwt_token)
 	return decoded_token['uid']
 
-def prepare_data(users_df):
+def prepare_data(users_df, experiment_type):
 	df = DataPreparer(users_df)
-	preprocessor = Preprocessor(df.users_df)
+	preprocessor = Preprocessor(df.users_df, experiment_type)
 	return preprocessor.df
 
 def evaluate(model, users_df, uid):
