@@ -172,7 +172,7 @@ class Evaluator():
         return frr
 
     def calculate_eer(self, y_true, y_pred_score):
-        fpr, fnr, thresholds = metrics.det_curve(y_true, y_score)
+        fpr, fnr, thresholds = metrics.det_curve(y_true, y_pred_score)
         eer1 = fpr[np.nanargmin(np.absolute(fnr - fpr))]
         eer2 = fnr[np.nanargmin(np.absolute(fnr - fpr))]
         eer = (eer1 + eer2)/2
