@@ -4,7 +4,7 @@ from pipeline import DataPreparer, Preprocessor, Evaluator
 
 
 def get_model(uid, experiment_type):
-	with open(f'ml_models/{experiment_type}/model{id}.pkl', 'rb') as file:
+	with open(f'ml_models/{experiment_type}/model{uid}.pkl', 'rb') as file:
 		return pickle.load(file)
 
 def authenticate(jwt_token):
