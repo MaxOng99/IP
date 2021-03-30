@@ -13,9 +13,9 @@ def authenticate(jwt_token):
 	return decoded_token['uid']
 
 def prepare_data(users_df, experiment_type):
-	df = DataPreparer(users_df)
-	preprocessor = Preprocessor(df.users_df, experiment_type)
-	return preprocessor.df
+	users_df = DataPreparer(users_df).users_df
+	preprocessed_reaction_df = {uid: Preprocessor(user_df, experiment_type).df for uid, user_df in users_df.items()}
+	return preprocessed_reaction_df
 
 def evaluate(model, users_df, uid):
 	evaluator = Evaluator(model, users_df, uid)
