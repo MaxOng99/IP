@@ -1,9 +1,9 @@
 preprocess:
     steps:
         - add_temporal_features
-        - drop_redundant_features
         - add_statistical_features
-
+        - drop_redundant_features
+        
     statistical_features:
     - downX
     - downY

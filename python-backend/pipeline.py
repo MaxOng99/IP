@@ -61,8 +61,8 @@ class Preprocessor:
     def step_to_function_mapping(self):
         mapping = {
             'add_temporal_features': self.add_temporal_features,
-            'drop_redundant_features': self.drop_redundant_features,
-            'add_statistical_features': self.add_statistical_features
+            'add_statistical_features': self.add_statistical_features,
+            'drop_redundant_features': self.drop_redundant_features
         }
 
         return mapping
@@ -91,10 +91,6 @@ class Preprocessor:
         # Add reaction features
         for j in range(1, 4):
             self.df.loc[:, f'intertap{j}'] = self.df[f'downTimestamp{j+1}'] - self.df[f'upTimestamp{j}']
-
-        # Remove individual timestamp feature
-        cols = self.df.columns.drop(list(self.df.filter(regex = 'upTimestamp.*|downTimestamp.*')))
-        self.df = self.df[cols]
 
     # Used for adding temporal features for reaction dataset
     def reorder_timestamp(self, row):
@@ -125,7 +121,7 @@ class Preprocessor:
 
     def drop_redundant_features(self):
 
-        redundant_columns_regex = 'user|date|sampleId|tapCount.*|index.*|up.*'
+        redundant_columns_regex = 'user|date|sample_id|tapCount.*|index.*|up.*|.*Timestamp.*'
         essential_columns = self.df.columns.drop(list(self.df.filter(regex=redundant_columns_regex)))
 
         self.df = self.df[essential_columns]
