@@ -31,10 +31,9 @@ class DataPreparer:
 
         feature_map = dict()
         feature_map['user'] = user
-        feature_map['date'] = record['date']
-        feature_map['sample_id'] = record['sample_id']
-
-        tap_data = record['data']
+        feature_map['date'] = record.date
+        feature_map['sample_id'] = record.sample_id
+        tap_data = record.data
 
         for index, single_tap in enumerate(tap_data):
 
