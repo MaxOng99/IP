@@ -11,19 +11,12 @@ import retrofit2.http.*
 
 
 interface TouchDynamicsApi {
-
-    @POST("predict/reaction")
-    suspend fun getReactionPrediction(
-        @Header("jwt-token") token:String,
-        @Body request: RequestWrapper
-    ): Response<ResponseWrapper>
-
-    @POST("predict/keystroke")
-    suspend fun getKeystrokePrediction(
-        @Header("jwt-token") token: String,
-        @Body request: RequestWrapper
-    ): Response<ResponseWrapper>
-
     @GET("/")
     suspend fun getRoot(): Response<HashMap<String, String>>
+
+    @POST("/predict")
+    suspend fun getPredictions(
+        @Header("jwt-token") token: String,
+        @Body request: RequestWrapper
+    ) :Response<ResponseWrapper>
 }

@@ -9,6 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.touchauthenticator.data.repository.TouchGestureRepository
 import com.example.touchauthenticator.data.model.TouchGestureData
 import com.example.touchauthenticator.data.api.TouchDynamicsApi
+import com.example.touchauthenticator.data.model.RequestWrapper
+import com.example.touchauthenticator.data.model.ResponseWrapper
+import com.example.touchauthenticator.utility.GlobalVars.Companion.JWT_TOKEN
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -28,12 +31,12 @@ class TestViewModel(
      * and the number of samples to be collected during enrolment
      */
     var _numberOfTaps:Int = 4
-    var _numberOfSamples:Int = 1
+    var _numberOfSamples:Int = 10
 
     /** Variables that keep track of UI state*/
     private var counter = Counter()
     var completedSamples = MutableLiveData<Int>()
-    var predictionResponse: MutableLiveData<Response<HashMap<String, String>>> = MutableLiveData()
+    var predictionResponse: MutableLiveData<Response<ResponseWrapper>> = MutableLiveData()
     var completedUsers = MutableLiveData<ArrayList<Int>>()
     var currIndex = MutableLiveData<Int>()
     lateinit var testActivity: String
@@ -51,9 +54,6 @@ class TestViewModel(
     }
 
     fun checkUserComplete(uid: Int):Boolean {
-        Log.d("uid: ", "$uid")
-        val list = userSampleMapping[uid]
-        Log.d("list: ", "$list")
         return userSampleMapping[uid]?.size != 0
     }
 
@@ -70,7 +70,7 @@ class TestViewModel(
     private var currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))
     private var upEvents = ArrayList<TouchGestureData.RawData>()
     private var downEvents = ArrayList<TouchGestureData.RawData>()
-    lateinit var predictionResults: Response<HashMap<String, String>>
+    lateinit var predictionResults: Response<ResponseWrapper>
     private var userSampleMapping = hashMapOf<Int, ArrayList<TouchGestureData>>(
         1 to ArrayList(),
         2 to ArrayList(),
@@ -168,6 +168,7 @@ class TestViewModel(
 
         val currUserSample = userSampleMapping[currentTestUser]
         currUserSample?.add(TouchGestureData(sample.toList() as List<HashMap<String, Number>>, currentTime, completedSamples.value!!))
+        Log.d("DEBUG", "$currentTestUser")
         downEvents.clear()
         upEvents.clear()
     }
@@ -175,28 +176,19 @@ class TestViewModel(
     /**
      * Send the recorded touch gesture samples to the repository to be saved permanently.
      */
-    private suspend fun uploadData():Response<HashMap<String, String>> {
+    private suspend fun uploadData():Response<ResponseWrapper> {
 
-        when (testActivity) {
-            "keystroke" -> {
-                //touchDynamicsApi.getKeystrokePrediction(JWT_TOKEN, RequestWrapper(userSampleMapping))
-                //val result = touchDynamicsApi.getRoot()
-            }
-
-            "reaction" -> {
-                //touchDynamicsApi.getReactionPrediction(JWT_TOKEN, RequestWrapper(userSampleMapping))
-                //val result = touchDynamicsApi.getRoot()
-            }
-        }
-
-        return touchDynamicsApi.getRoot()
+        Log.d("Test Activity: ", "$testActivity")
+        return touchDynamicsApi.getPredictions(JWT_TOKEN, RequestWrapper(testActivity, userSampleMapping))
     }
 
     /**
      * A class that keeps track of user's progress through the enrolment phase.
      * It records the number of completed samples, as well as resetting its state
      * when users' made an error during enrolment. Whenever a user successfully
-     * provide a sample, the view model will be notified to commit the data to memory.
+     * provide a sample, the view model
+     *
+     * l be notified to commit the data to memory.
      */
     inner class Counter(
     ) {
