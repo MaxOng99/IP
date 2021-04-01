@@ -18,6 +18,7 @@ import androidx.gridlayout.widget.GridLayout
 import androidx.lifecycle.Observer
 import com.example.touchauthenticator.R
 import com.example.touchauthenticator.utility.ActivityLauncher
+import com.example.touchauthenticator.utility.GlobalVars.Companion.USER_ID
 import com.example.touchauthenticator.utility.ServiceLocator
 import com.google.android.material.button.MaterialButton
 import kotlin.collections.ArrayList
@@ -49,6 +50,7 @@ abstract class TestActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         gridLayout = findViewById(R.id.gridLayout)
         instruction = findViewById(R.id.instruction)
         userTextView = findViewById(R.id.userTextView)
+        userTextView.text = "Logged In: User $USER_ID"
 
         spinner = findViewById(R.id.spinner)
         ArrayAdapter.createFromResource(
@@ -79,7 +81,6 @@ abstract class TestActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
             viewModel.resetSample()
             viewModel.resetCompletedSamples()
         }
-        userTextView.text = currentUser
         viewModel.currentTestUser = pos+1
 
     }

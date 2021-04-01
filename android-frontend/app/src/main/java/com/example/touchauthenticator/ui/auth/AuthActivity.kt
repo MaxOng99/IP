@@ -53,6 +53,7 @@ class AuthActivity:AppCompatActivity() {
             Toast.makeText(baseContext, "Authentication success.",
                 Toast.LENGTH_SHORT).show()
             viewModel.storeJwtToken()
+            viewModel.storeUserId()
             val currentUser = viewModel.getAuthorizedUser()
             ActivityLauncher.launchHomeActivity(this, currentUser!!)
         } else {

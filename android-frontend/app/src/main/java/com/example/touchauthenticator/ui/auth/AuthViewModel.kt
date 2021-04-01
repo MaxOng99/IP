@@ -3,6 +3,7 @@ package com.example.touchauthenticator.ui.auth
 import androidx.lifecycle.ViewModel
 import com.example.touchauthenticator.data.repository.UserRepository
 import com.example.touchauthenticator.utility.GlobalVars.Companion.JWT_TOKEN
+import com.example.touchauthenticator.utility.GlobalVars.Companion.USER_ID
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
@@ -32,5 +33,10 @@ class AuthViewModel(
                     JWT_TOKEN = task.result!!.token!!
                 }
             }
+    }
+
+    fun storeUserId() {
+        val email = getAuthorizedUser()?.email
+        USER_ID = email.toString().filter { it.isDigit() }
     }
 }
