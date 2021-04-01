@@ -31,7 +31,7 @@ class TestViewModel(
      * and the number of samples to be collected during enrolment
      */
     var _numberOfTaps:Int = 4
-    var _numberOfSamples:Int = 10
+    var _numberOfSamples:Int = 4
 
     /** Variables that keep track of UI state*/
     private var counter = Counter()

@@ -52,6 +52,7 @@ abstract class TestActivity : AppCompatActivity(), AdapterView.OnItemSelectedLis
         userTextView = findViewById(R.id.userTextView)
         userTextView.text = "Logged In: User $USER_ID"
 
+
         spinner = findViewById(R.id.spinner)
         ArrayAdapter.createFromResource(
             this,

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,9 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/user2"
-        app:layout_constraintEnd_toEndOf="@+id/user2"
-        app:layout_constraintStart_toStartOf="@+id/user2"
+        app:layout_constraintEnd_toEndOf="@+id/activityLauncher"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/activityLauncher"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -19,9 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/user3"
-        app:layout_constraintEnd_toEndOf="@+id/user3"
-        app:layout_constraintStart_toStartOf="@+id/user3"
+        app:layout_constraintEnd_toEndOf="@+id/activityLauncher"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/activityLauncher"
         app:layout_constraintTop_toBottomOf="@+id/user1" />
 
     <TextView
@@ -29,9 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/user4"
-        app:layout_constraintEnd_toEndOf="@+id/user4"
-        app:layout_constraintStart_toStartOf="@+id/user4"
+        app:layout_constraintEnd_toEndOf="@+id/activityLauncher"
+        app:layout_constraintStart_toStartOf="@+id/activityLauncher"
         app:layout_constraintTop_toBottomOf="@+id/user2" />
 
     <TextView
@@ -39,19 +45,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/activityLauncher"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/metrics"
         app:layout_constraintEnd_toEndOf="@+id/activityLauncher"
         app:layout_constraintStart_toStartOf="@+id/activityLauncher"
         app:layout_constraintTop_toBottomOf="@+id/user3" />
+
+    <TextView
+        android:id="@+id/metrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/activityLauncher"
+        app:layout_constraintEnd_toEndOf="@+id/activityLauncher"
+        app:layout_constraintStart_toStartOf="@+id/activityLauncher"
+        app:layout_constraintTop_toBottomOf="@+id/user4" />
 
     <Button
         android:id="@+id/activityLauncher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Keystroke Experiment"
         android:onClick="launchNextActivity"
+        android:text="Keystroke Experiment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user4" />
+        app:layout_constraintTop_toBottomOf="@+id/metrics" />
 </androidx.constraintlayout.widget.ConstraintLayout>

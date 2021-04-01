@@ -19,6 +19,7 @@ class ResultActivity: AppCompatActivity() {
     private val viewModel: ResultViewModel = ResultViewModel()
     private var users: ArrayList<TextView> = ArrayList()
     private lateinit var activityLauncherButton: Button
+    private lateinit var metricsTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +33,14 @@ class ResultActivity: AppCompatActivity() {
     }
 
     private fun initialiseViews() {
-        activityLauncherButton = findViewById(R.id.activityLauncher)
 
+        metricsTextView = findViewById(R.id.metrics)
+        val eer = "%.3f".format(viewModel.predictionResult.eer)
+        val frr = "%.3f".format(viewModel.predictionResult.frr)
+        val far = "%.3f".format(viewModel.predictionResult.far)
+        metricsTextView.text = "EER: $eer% | FRR: $frr% | FAR: $far%"
+
+        activityLauncherButton = findViewById(R.id.activityLauncher)
         for (i in 1..4) {
             val id = resources.getIdentifier("user$i", "id", packageName)
             val textView: TextView = findViewById(id)
