@@ -8,4 +8,5 @@ scikit-learn==0.24.1
 pandas==1.2.1
 pydantic==1.8.1
 google-cloud-logging==2.3.1
+pytest==6.2.2
 
