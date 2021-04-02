@@ -1,1 +1,1 @@
-pip install -r requirements.txt -t src/
+pip install -r python-backend/scripts/requirements.txt -t python-backend/src/
