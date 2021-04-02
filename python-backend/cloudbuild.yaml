@@ -5,7 +5,6 @@ steps:
   env:
     - "PYTHONPATH=/python-backend/lib"
   args: [-c 'python-backend/scripts/run_tests.sh']
-  waitFor: ['requirements']
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
