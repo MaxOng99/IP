@@ -1,6 +1,8 @@
-pip install -r python-backend/scripts/requirements.txt -t /workspace/python-backend/lib
-pip install -e -t /workspace/python-backend/lib
+cd python-backed/
 
-cd python-backend/src/tests/
+pip install -r scripts/requirements.txt -t /workspace/python-backend/lib
+pip install -e -t /python-backend/lib
+
+cd src/tests/
 python -m pytest
-cd ../../../
+
