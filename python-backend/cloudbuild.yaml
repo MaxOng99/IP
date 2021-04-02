@@ -8,7 +8,7 @@ steps:
   id: tests
   entrypoint: bash
   env:
-    - "PYTHONPATH=python-backend/src/main"
+    - "PYTHONPATH=/python-backend/lib"
   args: ['python-backend/scripts/run_tests.sh']
   waitFor: ['requirements']
 
