@@ -2,14 +2,14 @@ steps:
 - name: python:3.7
   id: requirements
   entrypoint: bash
-  args: ['scripts/install_requirements.sh']
+  args: ['python-backend/scripts/install_requirements.sh']
 
 - name: python:3.7
   id: tests
   entrypoint: bash
   env:
     - "PYTHONPATH=python-backend/src"
-  args: ['scripts/run_tests.sh']
+  args: ['python-backend/scripts/run_tests.sh']
   waitFor: ['requirements']
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
