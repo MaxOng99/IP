@@ -6,9 +6,10 @@ import firebase_admin
 from firebase_admin.auth import InvalidIdTokenError
 
 # Custom module imports
-from utilities import authenticate
-from utilities import get_model, prepare_data, evaluate, get_uid_mapping
-from data_objects import TouchGestureData, UserTGDMapping, EvaluationResult
+from utilities.util_functions import authenticate
+from utilities.util_functions import get_model, prepare_data, evaluate, get_uid_mapping
+from api_structure.request import TouchGestureData, UserTGDMapping
+from api_structure.response import EvaluationResult
 
 ## App Initialisation
 default_app = firebase_admin.initialize_app()
@@ -32,5 +33,3 @@ def predict(request: UserTGDMapping, jwt_token = Header(None)):
 
 	except InvalidIdTokenError:
 		return "Authroization failed"
-
-

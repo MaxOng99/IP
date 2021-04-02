@@ -1,5 +1,19 @@
 steps:
+- name: python:3.7
+  id: requirements
+  entrypoint: bash
+  args: ['python-backend/src/install_requirements.sh']
+
+- name: python:3.7
+  id: tests
+  entrypoint: bash
+  env:
+    - "PYTHONPATH=python-backend/src"
+  args: ['python-backend/src/run_tests.sh']
+  waitFor: ['requirements']
+
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
-  args: ['-c', 'cd python-backend && gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy --version=test']
-timeout: '1600s'
+  args: ['-c', 'cd python-backend/src/main && gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy --version=test']
+  waitFor: ['tests']
+

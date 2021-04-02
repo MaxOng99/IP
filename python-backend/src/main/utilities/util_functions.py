@@ -1,6 +1,8 @@
 import pickle
 from firebase_admin import auth
-from pipeline import DataPreparer, Preprocessor, Evaluator
+from pipeline.data_preparer import DataPreparer
+from pipeline.preprocessor import Preprocessor
+from pipeline.evaluator import Evaluator
 import google.cloud.logging
 import logging
 

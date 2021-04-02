@@ -1,1 +1,4 @@
 __pycache__/
+.pytest_cache/
+src/tests/__pycache__/
+src/tests/.pytest_cache/

@@ -9,10 +9,3 @@ class TouchGestureData(BaseModel):
 class UserTGDMapping(BaseModel):
 	experiment_type: str
 	user_tgd_map: Mapping[int, List[TouchGestureData]]
-
-class EvaluationResult(BaseModel):
-	response: Mapping[int, int] 
-	far: float
-	frr: float
-	eer: float
-
