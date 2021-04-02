@@ -46,12 +46,12 @@ class ResultActivity: AppCompatActivity() {
             val textView: TextView = findViewById(id)
             val userResult = viewModel.predictionResult.predictions[i]
             Log.d("Debug", "$userResult")
-            textView.text = "$userResult/10"
+            textView.text = "User $i: $userResult/10"
             users.add(textView)
         }
 
         if (viewModel.nextActivity == "keystroke") {
-            activityLauncherButton.text = "Keystroke Experiment"
+            activityLauncherButton.text = "To Keystroke Experiment"
         }
         else{
          activityLauncherButton.text = "Exit"
