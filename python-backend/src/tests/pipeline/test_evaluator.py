@@ -1,4 +1,4 @@
-from lib import pytest
+import pytest
 from main.pipeline.evaluator import Evaluator
 
 # generate test cases
