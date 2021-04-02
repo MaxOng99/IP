@@ -12,7 +12,7 @@ class Evaluator():
         cm = metrics.confusion_matrix(y_true, y_pred)
         fp = cm[0, 1] 
         tn = cm[0, 0] 
-        far = fp/(fp+tn)
+        far = 0 if (fp+tn) == 0 else fp/(fp+tn)
 
         return far
 
@@ -20,7 +20,7 @@ class Evaluator():
         cm = metrics.confusion_matrix(y_true, y_pred)
         fn = cm[1, 0]
         tp = cm[1, 1]
-        frr = fn/(fn+tp)
+        frr = 0 if (fn+tp) == 0 else fn/(fn+tp)
 
         return frr
 
