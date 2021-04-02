@@ -1,5 +1,5 @@
 import pytest
-from main.pipeline.evaluator import Evaluator
+from pipeline.evaluator import Evaluator
 
 # generate test cases
 def generate_scores():
