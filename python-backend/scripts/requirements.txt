@@ -10,4 +10,5 @@ pydantic==1.8.1
 google-cloud-logging==2.3.1
 pytest==6.2.2
 pylint==2.7.4
+pylint-runner==0.6.0
 
