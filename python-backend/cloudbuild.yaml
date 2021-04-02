@@ -3,7 +3,7 @@ steps:
   id: tests
   entrypoint: bash
   env:
-    - "PYTHONPATH=/workspace/python-backend/lib"
+    - "PYTHONPATH=/workspace/python-backend/src"
   args: ['python-backend/scripts/run_tests.sh']
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'

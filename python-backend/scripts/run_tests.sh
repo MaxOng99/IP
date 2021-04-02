@@ -1,9 +1,4 @@
-cd python-backed/
-mkdir lib
+pip install -r python-backend/scripts/requirements.txt
 
-pip install -r scripts/requirements.txt -t /lib
-pip install -e -t /lib
-
-cd src/tests/
+cd python-backend/src/tests/
 python -m pytest
-
