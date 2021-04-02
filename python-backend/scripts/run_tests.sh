@@ -1,4 +1,7 @@
-pip install -r python-backend/scripts/requirements.txt
+cd python-backend/
 
-cd python-backend/src/tests/
+pip install -r scripts/requirements.txt
+pylint --rcfile=scripts/.pylintrc src/main
+
+cd src/tests
 python -m pytest
