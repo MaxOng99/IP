@@ -1,5 +1,5 @@
-cd python-backend/src/tests
+cd python-backend/src/tests/
 
-python -m pytest
+pytest
 
 cd ../../../
