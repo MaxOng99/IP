@@ -53,8 +53,8 @@ class Evaluator():
 	def get_prediction_results(self, uid):
 
 		X = self.users_df[uid]
-		y_pred = self.model.predict(X)
 		logging.info(X)
+		y_pred = self.model.predict(X)
 		accepted_predictions = [prediction for prediction in y_pred if prediction == 1.0]
 
 		return len(accepted_predictions)
