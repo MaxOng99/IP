@@ -5,10 +5,16 @@ based on EER, FAR and FRR.
 import numpy as np
 from sklearn import metrics
 import pandas as pd
+from google.cloud import logging
+import logging
 
 # pylint: disable=C0116
 # pylint: disable=R0201
 class Evaluator():
+
+	logging_client = logging.Client()
+	client.get_default_handler()
+	client.setup_logging()
 
 	"""
 	- model: model to be evaluated.
@@ -48,6 +54,7 @@ class Evaluator():
 
 		X = self.users_df[uid]
 		y_pred = self.model.predict(X)
+		logging.info(X)
 		accepted_predictions = [prediction for prediction in y_pred if prediction == 1.0]
 
 		return len(accepted_predictions)
