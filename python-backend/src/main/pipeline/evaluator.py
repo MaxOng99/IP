@@ -5,14 +5,14 @@ based on EER, FAR and FRR.
 import numpy as np
 from sklearn import metrics
 import pandas as pd
-from google.cloud import logging
+import google.cloud.logging
 import logging
 
 # pylint: disable=C0116
 # pylint: disable=R0201
 class Evaluator():
 
-	logging_client = logging.Client()
+	logging_client = google.cloud.logging.Client()
 	client.get_default_handler()
 	client.setup_logging()
 
