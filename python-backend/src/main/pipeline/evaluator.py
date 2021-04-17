@@ -12,7 +12,7 @@ import logging
 # pylint: disable=R0201
 class Evaluator():
 
-	logging_client = google.cloud.logging.Client()
+	client = google.cloud.logging.Client()
 	client.get_default_handler()
 	client.setup_logging()
 
