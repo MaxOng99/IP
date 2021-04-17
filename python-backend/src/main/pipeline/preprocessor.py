@@ -87,7 +87,7 @@ class Preprocessor:
 	def drop_redundant_features(self):
 
 		redundant_columns_regex = '''user|date|sample_id|tapCount.*|index.*|up.*
-		|.*Timestamp.*|keyhold.*|intertap.*|avgkeyhold|avgintertap'''
+		|.*Timestamp.*'''
 
 		new_cols = self.df.columns.drop(list(self.df.filter(regex=redundant_columns_regex)))
 
