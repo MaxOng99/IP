@@ -8,6 +8,6 @@ steps:
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
-  args: ['-c', 'cd python-backend/src/main && gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy --version=test --no-cache']
+  args: ['-c', 'cd python-backend/src/main && gcloud app deploy --version=test --no-cache']
   waitFor: ['tests']
 
