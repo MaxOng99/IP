@@ -49,10 +49,12 @@ class Preprocessor:
 				new_row = self.reorder_timestamp(row)
 				self.df.at[i, :] = new_row
 
+		"""
 		# Add keyhold features
 		for i in range(1, 5):
 			self.df.loc[:, f'keyhold{i}'] = self.df[f'upTimestamp{i}'] - self.df[f'downTimestamp{i}']
-
+		"""
+		
 		# Add reaction features
 		for j in range(1, 4):
 			self.df.loc[:, f'intertap{j}'] = self.df[f'downTimestamp{j+1}'] - self.df[f'upTimestamp{j}']
