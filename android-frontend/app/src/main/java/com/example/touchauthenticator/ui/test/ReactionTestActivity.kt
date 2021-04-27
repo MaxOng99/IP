@@ -53,14 +53,6 @@ class ReactionTestActivity: TestActivity() {
                 )
             }
         })
-
-        viewModel.predictionResponse.observe(this, Observer { response ->
-            response.body()?.let {
-                ActivityLauncher.launchResultActivity(this, viewModel.currentLegitimateUser,
-                    it, "keystroke"
-                )
-            }
-        })
     }
 
     @SuppressLint("ClickableViewAccessibility", "NewApi")

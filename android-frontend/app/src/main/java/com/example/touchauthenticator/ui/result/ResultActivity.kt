@@ -35,10 +35,11 @@ class ResultActivity: AppCompatActivity() {
     private fun initialiseViews() {
 
         metricsTextView = findViewById(R.id.metrics)
-        val eer = "%.3f".format(viewModel.predictionResult.eer)
-        val frr = "%.3f".format(viewModel.predictionResult.frr)
-        val far = "%.3f".format(viewModel.predictionResult.far)
-        metricsTextView.text = "EER: $eer% | FRR: $frr% | FAR: $far%"
+        val eer = "%.3f".format(viewModel.predictionResult.eer*100)
+        //val frr = "%.3f".format(viewModel.predictionResult.frr*100)
+        //val far = "%.3f".format(viewModel.predictionResult.far*100)
+        //metricsTextView.text = "EER: $eer% | FRR: $frr% | FAR: $far%"
+        metricsTextView.text = "EER: $eer%"
 
         activityLauncherButton = findViewById(R.id.activityLauncher)
         for (i in 1..4) {
