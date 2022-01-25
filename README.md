@@ -51,7 +51,7 @@ be observed in Figure 4.7 and 4.8
 
 Keystroke                                                                            |  Reaction Time
 :-----------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------:
-<img src="./images/scatter_keystroke_2.png" alt="keystroke_analysis" width="460" height="320"> | <img src="./images/scatter_reaction_2.png" alt="reaction analysis" width="460" height="320">
+<img src="./images/scatter_keystroke_2.png" alt="keystroke_analysis" width="460" height="300"> | <img src="./images/scatter_reaction_2.png" alt="reaction analysis" width="460" height="300">
 
 Looking at the scatter plots, it can be observed that both datasets displayed
 some degree of segregation between the participants. However, each set of
