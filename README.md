@@ -46,8 +46,7 @@ data points (which belong to other participants). The 3 features chosen were
 avgPressure on the x-axis, avgKeyhold on the y-axis and avgIntertap on the
 z-axis, and they were normalised as they had different range of values. avgPressure was chosen as it provides good segregation (Y. Meng, Wong, and
 Kwok, 2014). The other two temporal features were selected to visualise the
-impact of RT on the degree of data points segregation. The scatter plots can
-be observed in Figure 4.7 and 4.8
+impact of RT on the degree of data points segregation. The scatter plots are shown below:
 
 Keystroke                                                                            |  Reaction Time
 :-----------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------:
